@@ -49,31 +49,57 @@ npm run build              # .vercel/output に静的ファイル生成
 
 ## microCMS 側のセットアップ
 
+トップの「ニュース＆コラム」セクションは `news`（お知らせ）と `blog`（ブログ）の**最新を混在表示**します。両方のAPIを作成してください。
+
 ### 1. サービス作成
 
-[microcms.io](https://microcms.io) でサービスを作成。サービスドメインを控える（例: `yutect`）。
+[microcms.io](https://microcms.io) でサービスを作成（テンプレートは使わず「自分で作成」）。サービスドメインを控える（例: `yutect`）。
 
 ### 2. APIスキーマ作成
 
-API名: `news` / API型: **リスト形式**
+#### 2-1. `news` API（お知らせ）
+
+API名: `お知らせ` / エンドポイント: `news` / API型: **リスト形式**
 
 | フィールドID | 表示名 | 種類 | 必須 | 備考 |
 |---|---|---|---|---|
-| `title` | タイトル | テキスト | ✓ | 一覧・詳細両方で使用 |
+| `title` | タイトル | テキスト | ✓ | |
 | `publishedDate` | 公開日 | 日時 |  | 未設定時は `publishedAt` を使用 |
-| `category` | カテゴリ | 複数コンテンツ参照 or セレクト |  | 値: `RELEASE` / `CASE` / `COLUMN` / `EVENT` |
+| `category` | カテゴリ | セレクト |  | 値: `RELEASE` / `CASE` / `EVENT`<br>「複数選択」OFF |
 | `thumbnail` | サムネイル | 画像 |  | 16:10 推奨 |
-| `excerpt` | 抜粋 | テキストエリア |  | 詳細ページのmeta description用 |
-| `body` | 本文 | リッチエディタ |  | HTML として詳細ページに描画 |
-| `slug` | スラッグ | テキスト |  | （現状は `id` を使用するため任意） |
+| `excerpt` | 抜粋 | テキストエリア |  | カードや meta 用の短文 |
+| `body` | 本文 | リッチエディタ |  | 内部記事のみ記入。外部リンクの場合は空でOK |
+| `externalUrl` | 外部URL | テキスト |  | PR TIMES など外部記事URL。設定するとカードが直接外部に飛ぶ |
 
-> **カテゴリ** はセレクトフィールドで作成し、選択肢に `RELEASE` `CASE` `COLUMN` `EVENT` の4つを入れるのが最も簡単。`RELEASE` のとき金色バッジになります。
+> `RELEASE` カテゴリのときカードバッジが金色になります。
+
+#### 2-2. `blog` API（ブログ）
+
+API名: `ブログ` / エンドポイント: `blog` / API型: **リスト形式**
+
+| フィールドID | 表示名 | 種類 | 必須 | 備考 |
+|---|---|---|---|---|
+| `title` | タイトル | テキスト | ✓ | |
+| `publishedDate` | 公開日 | 日時 |  | |
+| `category` | カテゴリ | セレクト |  | 値: `TECH` / `DESIGN` / `CASE` / `COLUMN` |
+| `thumbnail` | サムネイル | 画像 |  | ブログはサムネ重要 |
+| `excerpt` | 抜粋 | テキストエリア |  | |
+| `body` | 本文 | リッチエディタ |  | 内部記事のみ記入 |
+| `externalUrl` | 外部URL | テキスト |  | Zenn / note / Medium など外部記事URL |
 
 ### 3. APIキーを発行
 
-- 管理画面 → 「APIキー」 → 新規発行
-- 権限: **GET のみ** (公開記事の取得用)
+- 管理画面 → サービス設定 → 「APIキー」 → 新規発行
+- 権限: **GET のみ** (公開記事の取得用) — `news` `blog` 両方のAPIを許可
+- 1つのキーで両APIにアクセスできるので、キーは**1つだけ**でOK
 - 必要に応じて IP制限・リファラ制限を設定
+
+### 表示ロジック
+
+- トップページ: `news` と `blog` を混在 → `publishedDate` 降順で最新4件
+- カードに種別バッジ（NEWS / BLOG）を表示
+- `externalUrl` が設定されている記事 → クリックでその外部URLに（新しいタブで）遷移
+- `externalUrl` が空の記事 → 内部詳細ページ `/news/[id]` または `/blog/[id]` に遷移
 
 ---
 

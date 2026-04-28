@@ -2,34 +2,30 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import { getNewsList, getNews, formatNewsDate, pickCategory, type News } from '../../lib/microcms';
+import { getBlogList, getBlog, formatNewsDate, pickCategory, type Blog } from '../../lib/microcms';
 
 export async function getStaticPaths() {
-  const list = await getNewsList(100);
-  // Skip articles that link out — those should always go to external URL, no internal page
+  const list = await getBlogList(100);
   return list
     .filter((item) => !item.externalUrl)
     .map((item) => ({
       params: { id: item.id },
-      props: { news: item },
+      props: { blog: item },
     }));
 }
 
 interface Props {
-  news: News;
+  blog: Blog;
 }
 
-const { news } = Astro.props;
-
-// Re-fetch the detail to get full body
-const full = (await getNews(news.id)) ?? news;
+const { blog } = Astro.props;
+const full = (await getBlog(blog.id)) ?? blog;
 
 const category = pickCategory(full.category);
 const date = formatNewsDate(full.publishedDate || full.publishedAt);
-const tagClass = category === 'RELEASE' ? 'news-tag gold' : 'news-tag';
 
-const pageTitle = `${full.title} | YUTECT News`;
-const description = full.excerpt || `${full.title} - YUTECTのニュース記事`;
+const pageTitle = `${full.title} | YUTECT Blog`;
+const description = full.excerpt || `${full.title} - YUTECTのブログ記事`;
 ---
 
 <Layout title={pageTitle} description={description}>
@@ -42,7 +38,7 @@ const description = full.excerpt || `${full.title} - YUTECTのニュース記事
 
         <div class="news-detail-meta">
           {date && <div class="news-date">{date}</div>}
-          {category && <span class={tagClass}>{category}</span>}
+          {category && <span class="news-tag">{category}</span>}
         </div>
 
         <h1>{full.title}</h1>
