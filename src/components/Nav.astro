@@ -1,0 +1,18 @@
+---
+const links = [
+  { href: '/#services', label: 'サービス' },
+  { href: '/#features', label: 'Revit助人' },
+  { href: '/#news', label: 'ニュース' },
+  { href: '/#company', label: '会社概要' },
+];
+---
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/"><img class="nav-logo" src="/assets/yutect-logo-color.png" alt="YUTECT" /></a>
+    <div class="nav-links">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </div>
+    <a href="/#cta" class="nav-cta">お問い合わせ</a>
+  </div>
+</nav>

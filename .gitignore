@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.env
+.env.production
+.env.local
+.DS_Store
+*.log
+_legacy/
+.claude/
+screenshot-*.png

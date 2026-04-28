@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getNewsList, getNews, formatNewsDate, pickCategory, type News } from '../../lib/microcms';
+
+export async function getStaticPaths() {
+  const list = await getNewsList(100);
+  return list.map((item) => ({
+    params: { id: item.id },
+    props: { news: item },
+  }));
+}
+
+interface Props {
+  news: News;
+}
+
+const { news } = Astro.props;
+
+// Re-fetch the detail to get full body (list endpoint may return partial fields depending on schema)
+const full = (await getNews(news.id)) ?? news;
+
+const category = pickCategory(full.category);
+const date = formatNewsDate(full.publishedDate || full.publishedAt);
+const tagClass = category === 'RELEASE' ? 'news-tag gold' : 'news-tag';
+
+const pageTitle = `${full.title} | YUTECT News`;
+const description = full.excerpt || `${full.title} - YUTECTのニュース記事`;
+---
+
+<Layout title={pageTitle} description={description}>
+  <Nav />
+
+  <article class="news-detail">
+    <div class="shell">
+      <div class="news-detail-inner">
+        <a href="/#news" class="back-link">Back to News</a>
+
+        <div class="news-detail-meta">
+          {date && <div class="news-date">{date}</div>}
+          {category && <span class={tagClass}>{category}</span>}
+        </div>
+
+        <h1>{full.title}</h1>
+
+        {full.thumbnail && (
+          <div class="news-detail-thumb">
+            <img src={full.thumbnail.url} alt={full.title} width={full.thumbnail.width} height={full.thumbnail.height} />
+          </div>
+        )}
+
+        {full.body ? (
+          <div class="news-body" set:html={full.body}></div>
+        ) : (
+          <div class="news-body"><p>本文はまだありません。</p></div>
+        )}
+      </div>
+    </div>
+  </article>
+
+  <Footer />
+</Layout>

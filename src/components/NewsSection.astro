@@ -1,0 +1,45 @@
+---
+import { getNewsList, formatNewsDate, pickCategory, type News } from '../lib/microcms';
+
+const all = await getNewsList(4);
+const items: News[] = all.slice(0, 4);
+
+const goldCategories = new Set(['RELEASE']);
+---
+
+<section id="news" class="news-section">
+  <div class="shell">
+    <div class="section-head-c">
+      <span class="eyebrow">News &amp; Column</span>
+      <h2>ニュース＆コラム</h2>
+      <p>Revit助人および建築×AIに関する最新のお知らせをお届けします。</p>
+    </div>
+
+    <div class="news-grid">
+      {items.length === 0 && (
+        <div class="news-empty">記事はまだありません。</div>
+      )}
+      {items.map((item) => {
+        const category = pickCategory(item.category);
+        const tagClass = category && goldCategories.has(category) ? 'news-tag gold' : 'news-tag';
+        const date = formatNewsDate(item.publishedDate || item.publishedAt);
+        return (
+          <a class="news-card" href={`/news/${item.id}/`}>
+            <div class="news-thumb">
+              {item.thumbnail ? (
+                <img src={item.thumbnail.url} alt={item.title} width={item.thumbnail.width} height={item.thumbnail.height} />
+              ) : (
+                <span class="placeholder-label">News Image</span>
+              )}
+            </div>
+            <div class="news-meta">
+              <div class="news-date">{date}</div>
+              <h4 class="news-title">{item.title}</h4>
+              {category && <span class={tagClass}>{category}</span>}
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</section>

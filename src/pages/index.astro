@@ -1,0 +1,323 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import NewsSection from '../components/NewsSection.astro';
+---
+
+<Layout>
+  <Nav />
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>Revit助人</h1>
+        <div class="hero-eyebrow">Revitの自動設計AIアドイン</div>
+        <p class="lede">
+          建築設計の現場で繰り返される作業を、生成AIが学習し代行する。設計者は本質的な創造に集中し、品質と効率を両立する新しい時代の設計プロセスへ。
+        </p>
+        <div class="actions">
+          <a href="#cta" class="btn btn-primary">資料請求</a>
+          <a href="#features" class="btn btn-secondary">機能を見る</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+        <div class="placeholder-label">Product Image</div>
+        <span class="caption">Product · Revit Add-in</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTRO ============ -->
+  <section class="intro">
+    <div class="shell">
+      <div class="intro-eyebrow eyebrow"><div>CONCEPT</div></div>
+      <h2><em>言葉</em>で設計する、新しい体験</h2>
+      <p>
+        操作を覚える時代から、意図を伝える時代へ。<br />
+        設計者がやりたいことを話しかけるだけで、Revit助人がモデリング操作に翻訳します。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" class="features">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">FEATURES</span>
+        <h2>Revit助人 主要機能</h2>
+        <p>対話による指示、断面・ファミリの自動配置、配置済み要素の再編集。<br />設計現場で手戻りが起きやすい3つの操作を、AIが連続したフローとして引き受けます。</p>
+      </div>
+
+      <article class="feature">
+        <div class="feature-text">
+          <div class="feature-num">01</div>
+          <h3><span class="en">Conversational Interface</span>対話インターフェース</h3>
+          <p class="desc">
+            チャットでRevitに指示を出すだけ。自然な日本語で要望を伝えると、AIが意図を解釈し、最適なモデリング操作を提案・実行します。専門的な手順を覚える必要はありません。
+          </p>
+          <ul class="feature-list">
+            <li>チャット形式・人を超えた応答</li>
+            <li>自然言語からモデリング操作を生成</li>
+            <li>過去の対話を学習し、提案精度を向上</li>
+          </ul>
+          <a href="#" class="btn-ghost">詳細を見る</a>
+        </div>
+        <div class="feature-visual">
+          <div class="placeholder-label">Feature Image<span class="sub">Chat UI</span></div>
+          <span class="tag">UI · Chat</span>
+        </div>
+      </article>
+
+      <article class="feature reverse">
+        <div class="feature-visual alt">
+          <div class="placeholder-label">Feature Image<span class="sub">3D · Family</span></div>
+          <span class="tag">3D · Family</span>
+        </div>
+        <div class="feature-text">
+          <div class="feature-num">02</div>
+          <h3><span class="en">Section &amp; Family</span>断面・建具・ファミリに対応</h3>
+          <p class="desc">
+            複雑な断面処理やファミリの呼び出しも、AIが空間の文脈を理解して自動配置。標準ライブラリと社内テンプレートを横断的に検索し、最適な部品を選定します。
+          </p>
+          <ul class="feature-list">
+            <li>断面情報を自動で読み取り、整合性を確認</li>
+            <li>ファミリインスタンスの一括配置</li>
+            <li>社内テンプレート・標準ライブラリと連動</li>
+          </ul>
+          <a href="#" class="btn-ghost">詳細を見る</a>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-text">
+          <div class="feature-num">03</div>
+          <h3><span class="en">Parametric Edit</span>形状情報の取得とアクセス</h3>
+          <p class="desc">
+            配置済みの要素を、自然言語で再編集。「この壁の高さを300mm下げて」「このグリッドを延長して」といった指示を、即座にRevit上で反映します。
+          </p>
+          <ul class="feature-list">
+            <li>チャットから直接プロパティを編集</li>
+            <li>コマンドの履歴を学習・再利用可能</li>
+            <li>ワンクリックでロールバック</li>
+          </ul>
+          <a href="#" class="btn-ghost">詳細を見る</a>
+        </div>
+        <div class="feature-visual">
+          <div class="placeholder-label">Feature Image<span class="sub">Plan View</span></div>
+          <span class="tag">Plan View</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CTA BAND ============ -->
+  <section id="cta" class="cta-band">
+    <div class="cta-band-inner shell">
+      <div class="eyebrow">— Get in touch —</div>
+      <h2>助人のデモ・導入のご相談</h2>
+      <p>
+        ご自社のテンプレートに合わせたカスタマイズや、無償トライアルもご用意しています。<br />
+        まずはお気軽にお問い合わせください。
+      </p>
+      <a href="#" class="btn btn-primary">資料請求はこちら</a>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services" class="services-section">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Service</span>
+        <h2>提供サービス</h2>
+        <p>プロダクト提供に加え、建築×AIを軸にしたAIモデル開発・画像生成・R&amp;D共同研究・PoCまで幅広く承ります。「何から始めればいいか分からない」段階のご相談・課題整理から実施します。</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="icon-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/>
+            </svg>
+          </div>
+          <div class="num">01</div>
+          <h3>AIモデル開発</h3>
+          <div class="en-label">AI Model</div>
+          <p>建築・設計領域に特化した独自AIモデルの設計・学習・チューニングを行います。要件定義から実装まで一貫して対応。</p>
+          <ul>
+            <li>用途特化モデルの設計・学習</li>
+            <li>独自データによるファインチューニング</li>
+            <li>推論基盤の構築・運用</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="icon-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="9" cy="9" r="2"/>
+              <path d="M3 17l5-5 4 4 4-4 5 5"/>
+            </svg>
+          </div>
+          <div class="num">02</div>
+          <h3>画像生成ワークフロー開発</h3>
+          <div class="en-label">Image Generation</div>
+          <p>パース・ビジュアライゼーション・素材生成など、画像生成AIを活用した制作ワークフローを設計・実装します。</p>
+          <ul>
+            <li>用途別プロンプト・LoRA設計</li>
+            <li>制作パイプラインの自動化</li>
+            <li>社内ツール・UI整備</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="icon-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 2v6L4 14v6a2 2 0 002 2h12a2 2 0 002-2v-6l-5-6V2"/>
+              <path d="M9 2h6M8 14h8"/>
+            </svg>
+          </div>
+          <div class="num">03</div>
+          <h3>R&amp;D共同研究</h3>
+          <div class="en-label">Joint R&amp;D</div>
+          <p>大学・研究機関・企業様と、建築×AIの先端領域における共同研究を実施。論文・特許化までご支援します。</p>
+          <ul>
+            <li>研究テーマの共同設計</li>
+            <li>プロトタイプ実装・評価</li>
+            <li>成果の論文化・特許化支援</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="icon-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+              <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
+            </svg>
+          </div>
+          <div class="num">04</div>
+          <h3>PoC設計・検証</h3>
+          <div class="en-label">PoC</div>
+          <p>「AIで何ができるか分からない」段階から伴走。課題整理・仮説設計から短期PoCの実装・効果検証までご支援します。</p>
+          <ul>
+            <li>課題ヒアリング・仮説設計</li>
+            <li>短期PoC実装 (4〜8週間)</li>
+            <li>効果検証・本格導入提案</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-flow-head">
+        <div class="eyebrow">Onboarding Flow</div>
+        <h3>ご相談から定着まで、4ステップで伴走</h3>
+        <p>初回ヒアリングから運用支援まで、貴社の状況に合わせて段階的にサポートします。</p>
+      </div>
+      <div class="steps service-steps">
+        <div class="step">
+          <div class="step-num">STEP<strong>01</strong></div>
+          <div class="step-title">ヒアリング・現状診断</div>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP<strong>02</strong></div>
+          <div class="step-title">PoC・初期導入</div>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP<strong>03</strong></div>
+          <div class="step-title">本導入・社内展開</div>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP<strong>04</strong></div>
+          <div class="step-title">定着・運用支援</div>
+        </div>
+      </div>
+
+      <div class="services-callout">
+        <div class="text">
+          <strong>「AIで何ができるか分からない」段階からご相談ください。</strong>
+          <span>課題整理・要件定義からご一緒します。初回相談・ヒアリングは無償。全国オンラインで対応します。</span>
+        </div>
+        <a href="#cta" class="btn btn-primary">まずは相談する</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLIENTS ============ -->
+  <section id="clients" class="clients-section">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Clients</span>
+        <h2>取引実績</h2>
+        <p><span class="nb">大手設計事務所・ゼネコン・デベロッパーを</span><span class="nb">はじめとした様々な企業・創業スタジオと</span><span class="nb">取り組んでいます。</span></p>
+      </div>
+
+      <div class="clients-grid">
+        <div class="client-cell"><img src="/assets/KOKUYO_logo_2025.png" alt="KOKUYO" /></div>
+        <div class="client-cell"><img src="/assets/LIXIL_logo_2025.png" alt="LIXIL" /></div>
+        <div class="client-cell"><img src="/assets/PLUS1_logo_2025.png" alt="PLUS.1" /></div>
+        <div class="client-cell"><span class="placeholder">Client Logo</span></div>
+        <div class="client-cell"><span class="placeholder">Client Logo</span></div>
+        <div class="client-cell"><span class="placeholder">Client Logo</span></div>
+      </div>
+      <p class="clients-note">※ 掲載順不同。一部企業名公開不可を除きます。</p>
+    </div>
+  </section>
+
+  <!-- ============ NEWS (microCMS連携) ============ -->
+  <NewsSection />
+
+  <!-- ============ COMPANY ============ -->
+  <section id="company" class="company-section">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Company</span>
+        <h2>会社概要</h2>
+      </div>
+      <dl class="company-table">
+        <div class="company-row">
+          <dt>会社名</dt>
+          <dd>株式会社YUTECT</dd>
+        </div>
+        <div class="company-row">
+          <dt>設立</dt>
+          <dd>2025年5月</dd>
+        </div>
+        <div class="company-row">
+          <dt>代表取締役</dt>
+          <dd>星野　雄一</dd>
+        </div>
+        <div class="company-row">
+          <dt>所在地</dt>
+          <dd>〒120-0005 東京都足立区綾瀬16-9</dd>
+        </div>
+        <div class="company-row">
+          <dt>事業内容</dt>
+          <dd>
+            <ul>
+              <li>建築設計向けAIアドインの開発・提供</li>
+              <li>建築テンプレート・コンサルティング</li>
+              <li>カスタムAIソリューションの設計・実装</li>
+            </ul>
+          </dd>
+        </div>
+        <div class="company-row">
+          <dt>取引先</dt>
+          <dd>
+            <ul>
+              <li>大手建築設計事務所・ゼネコン各社</li>
+              <li>大手不動産デベロッパー</li>
+              <li>その他、官公庁・教育機関</li>
+            </ul>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

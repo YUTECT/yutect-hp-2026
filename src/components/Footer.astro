@@ -1,0 +1,48 @@
+---
+const productLinks = [
+  { href: '#', label: 'Revit助人' },
+  { href: '#', label: '設計AIアドイン' },
+  { href: '#', label: 'カスタム開発' },
+];
+const companyLinks = [
+  { href: '/#company', label: '会社概要' },
+  { href: '#', label: '採用情報' },
+  { href: '/#news', label: 'ニュース' },
+];
+const contactLinks = [
+  { href: '/#cta', label: 'お問い合わせ' },
+  { href: '/#cta', label: '資料請求' },
+  { href: '#', label: 'プライバシーポリシー' },
+];
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/yutect-logo.png" alt="YUTECT" />
+      <p>建築の未来を、テクノロジーで設計する。<br />YUTECTは、AIと建築の境界を再設計する企業です。</p>
+    </div>
+    <div class="footer-col">
+      <h5>Products</h5>
+      <ul>
+        {productLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        {companyLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        {contactLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 YUTECT inc.</span>
+    <span>Architectural Innovation, refined.</span>
+  </div>
+</footer>
