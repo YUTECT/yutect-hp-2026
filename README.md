@@ -5,9 +5,9 @@ Astro + microCMS で構築された YUTECT のコーポレートサイト。
 ## 構成
 
 - **Framework**: Astro 4 (静的サイト生成)
-- **CMS**: microCMS (ニュース記事のみ)
-- **Hosting**: Vercel
-- **更新フロー**: microCMS 投稿 → Webhook → Vercel 再ビルド → 公開
+- **CMS**: microCMS (お知らせ + ブログ)
+- **Hosting**: Netlify
+- **更新フロー**: microCMS 投稿 → Webhook → Netlify 再ビルド → 公開
 
 ## ディレクトリ
 
@@ -103,49 +103,52 @@ API名: `ブログ` / エンドポイント: `blog` / API型: **リスト形式*
 
 ---
 
-## Vercel デプロイ手順
+## Netlify デプロイ手順
 
-### 1. リポジトリを GitHub にプッシュ
+### 1. Netlify にプロジェクト追加
 
-```bash
-git init
-git add .
-git commit -m "initial commit"
-gh repo create yutect-hp --private --source=. --remote=origin --push
-```
+[app.netlify.com](https://app.netlify.com) にログイン → 「Add new site」 → 「Import an existing project」 → 「**Deploy with GitHub**」
 
-### 2. Vercel にプロジェクト追加
+GitHub連携を許可後、`YUTECT/yutect-hp-2026` を選択。
 
-[vercel.com/new](https://vercel.com/new) → GitHub リポジトリを選択 → そのまま Deploy
+### 2. ビルド設定
 
-Astro は自動検出されます。Framework Preset を `Astro` にしておけばOK。
+Netlify は `netlify.toml` を読んで自動設定するので、基本そのまま進めて問題なし。
 
-### 3. 環境変数を Vercel に登録
+| 項目 | 値 |
+|---|---|
+| Build command | `npm run build` |
+| Publish directory | `dist` |
 
-Vercel ダッシュボード → Settings → Environment Variables
+### 3. 環境変数を Netlify に登録
+
+Site settings → Environment variables → Add a variable
 
 | Key | Value |
 |---|---|
 | `MICROCMS_SERVICE_DOMAIN` | サービスドメイン (例: `yutect`) |
 | `MICROCMS_API_KEY` | microCMS で発行したAPIキー |
 
-設定後、Deployments → 最新デプロイの「⋯」→ Redeploy で反映。
+設定後、Deploys → Trigger deploy → 「Deploy site」で反映。
 
 ### 4. microCMS Webhook を設定 (記事公開時の自動デプロイ)
 
-#### Vercel側
+#### Netlify側
 
-1. Vercel ダッシュボード → Settings → **Git** → Deploy Hooks
-2. 「Create Hook」→ 名前: `microcms` / Branch: `main`
-3. 生成された URL をコピー
+1. Site settings → Build & deploy → **Build hooks**
+2. 「Add build hook」→ 名前: `microcms` / Branch: `main`
+3. 生成された URL（`https://api.netlify.com/build_hooks/...`）をコピー
 
 #### microCMS側
 
-1. 管理画面 → サービス設定 → API設定 → `news` → **Webhook**
-2. 「カスタム通知」を選択 → URL に Vercel の Deploy Hook URL を貼り付け
-3. トリガー: コンテンツの**公開時 / 更新時 / 削除時**にチェック
+各APIごとにWebhookを設定します（`news` と `blog` の両方）。
 
-これで microCMS で公開ボタンを押すと Vercel が自動で再ビルドし、数十秒〜1分でサイトに反映されます。
+1. 管理画面 → 対象API（`news` または `blog`） → API設定 → **Webhook**
+2. 「カスタム通知」を選択 → URL に Netlify の Build Hook URL を貼り付け
+3. トリガー: コンテンツの**公開時 / 更新時 / 削除時**にチェック
+4. `news` `blog` 両方で同じ URL を設定（同じビルドフックで両方からトリガーOK）
+
+これで microCMS で公開ボタンを押すと Netlify が自動で再ビルドし、1〜2分でサイトに反映されます。
 
 ---
 
