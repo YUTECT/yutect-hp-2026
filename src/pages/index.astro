@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import NewsSection from '../components/NewsSection.astro';
+import { CONTACT_FORM_URL } from '../lib/config';
 ---
 
 <Layout>
@@ -18,7 +19,7 @@ import NewsSection from '../components/NewsSection.astro';
           建築設計の現場で繰り返される作業を、生成AIが学習し代行する。設計者は本質的な創造に集中し、品質と効率を両立する新しい時代の設計プロセスへ。
         </p>
         <div class="actions">
-          <a href="#cta" class="btn btn-primary">資料請求</a>
+          <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">資料請求</a>
           <a href="#features" class="btn btn-secondary">機能を見る</a>
         </div>
       </div>
@@ -27,7 +28,19 @@ import NewsSection from '../components/NewsSection.astro';
         <span class="corner tr"></span>
         <span class="corner bl"></span>
         <span class="corner br"></span>
-        <div class="placeholder-label">Product Image</div>
+        <button class="hero-video" data-yt-id="s0iDytx-dHA" aria-label="プロダクト紹介動画を再生">
+          <img
+            class="hero-video-thumb"
+            src="https://i.ytimg.com/vi/s0iDytx-dHA/maxresdefault.jpg"
+            alt="プロダクト紹介動画のサムネイル"
+            loading="lazy"
+            width="1280"
+            height="720"
+          />
+          <span class="hero-video-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z"/></svg>
+          </span>
+        </button>
         <span class="caption">Product · Revit Add-in</span>
       </div>
     </div>
@@ -51,44 +64,43 @@ import NewsSection from '../components/NewsSection.astro';
       <div class="section-head-c">
         <span class="eyebrow">FEATURES</span>
         <h2>Revit助人 主要機能</h2>
-        <p>対話による指示、断面・ファミリの自動配置、配置済み要素の再編集。<br />設計現場で手戻りが起きやすい3つの操作を、AIが連続したフローとして引き受けます。</p>
       </div>
 
       <article class="feature">
         <div class="feature-text">
           <div class="feature-num">01</div>
-          <h3><span class="en">Conversational Interface</span>対話インターフェース</h3>
+          <h3><span class="en">Conversational Interface</span>対話ベースの基本操作</h3>
           <p class="desc">
-            チャットでRevitに指示を出すだけ。自然な日本語で要望を伝えると、AIが意図を解釈し、最適なモデリング操作を提案・実行します。専門的な手順を覚える必要はありません。
+            チャットUIから自然言語で指示するだけ。モデル内の要素・パラメータ・属性情報へ即座にアクセスし、不明点はAIに質問して回答を得られる。設計者の "副操縦士" として、Revit操作の入口を一新します。
           </p>
           <ul class="feature-list">
-            <li>チャット形式・人を超えた応答</li>
-            <li>自然言語からモデリング操作を生成</li>
-            <li>過去の対話を学習し、提案精度を向上</li>
+            <li>チャットUIから自然言語で指示・質問</li>
+            <li>モデルデータ (要素・パラメータ・属性) へ即時アクセス</li>
+            <li>操作手順や仕様の質問にもAIが回答</li>
           </ul>
           <a href="#" class="btn-ghost">詳細を見る</a>
         </div>
         <div class="feature-visual">
-          <div class="placeholder-label">Feature Image<span class="sub">Chat UI</span></div>
+          <img src="/assets/feature-01-chat.webp" alt="チャットUIで自然言語指示" width="1280" height="960" loading="lazy" />
           <span class="tag">UI · Chat</span>
         </div>
       </article>
 
       <article class="feature reverse">
         <div class="feature-visual alt">
-          <div class="placeholder-label">Feature Image<span class="sub">3D · Family</span></div>
-          <span class="tag">3D · Family</span>
+          <img src="/assets/feature-02-design.webp" alt="意匠・構造の設計タスク" width="1280" height="960" loading="lazy" />
+          <span class="tag">Design · Tasks</span>
         </div>
         <div class="feature-text">
           <div class="feature-num">02</div>
-          <h3><span class="en">Section &amp; Family</span>断面・建具・ファミリに対応</h3>
+          <h3><span class="en">Design Task Execution</span>意匠・構造の設計タスクに対応</h3>
           <p class="desc">
-            複雑な断面処理やファミリの呼び出しも、AIが空間の文脈を理解して自動配置。標準ライブラリと社内テンプレートを横断的に検索し、最適な部品を選定します。
+            要件文をそのまま指示として受け取り、意匠・構造両領域の設計タスクを実行。壁・建具・グリッドの自動配置、断面処理、構造部材の整合性チェックなど、実務で頻出する作業をAIが代行します。
           </p>
           <ul class="feature-list">
-            <li>断面情報を自動で読み取り、整合性を確認</li>
-            <li>ファミリインスタンスの一括配置</li>
-            <li>社内テンプレート・標準ライブラリと連動</li>
+            <li>意匠タスク: 壁・建具・グリッドの自動配置、断面・ファミリ操作</li>
+            <li>構造タスク: 構造グリッド生成、部材配置、整合性チェック</li>
+            <li>自然言語の要件文をそのままモデリング操作に変換</li>
           </ul>
           <a href="#" class="btn-ghost">詳細を見る</a>
         </div>
@@ -97,20 +109,20 @@ import NewsSection from '../components/NewsSection.astro';
       <article class="feature">
         <div class="feature-text">
           <div class="feature-num">03</div>
-          <h3><span class="en">Parametric Edit</span>形状情報の取得とアクセス</h3>
+          <h3><span class="en">Advanced Automation</span>ファミリ作成・Dynamo連携</h3>
           <p class="desc">
-            配置済みの要素を、自然言語で再編集。「この壁の高さを300mm下げて」「このグリッドを延長して」といった指示を、即座にRevit上で反映します。
+            カスタムファミリの自動作成や、Dynamoグラフの生成・編集・実行までAIが担当。反復タスクをスクリプト化し、社内テンプレート資産と連携させることで、BIM自動化エンジンとして機能します。
           </p>
           <ul class="feature-list">
-            <li>チャットから直接プロパティを編集</li>
-            <li>コマンドの履歴を学習・再利用可能</li>
-            <li>ワンクリックでロールバック</li>
+            <li>カスタムファミリの自動作成</li>
+            <li>Dynamoノードグラフの生成・編集・実行</li>
+            <li>反復タスクのスクリプト化と社内テンプレート連携</li>
           </ul>
           <a href="#" class="btn-ghost">詳細を見る</a>
         </div>
         <div class="feature-visual">
-          <div class="placeholder-label">Feature Image<span class="sub">Plan View</span></div>
-          <span class="tag">Plan View</span>
+          <img src="/assets/feature-03-dynamo.webp" alt="Dynamo連携・カスタムファミリ自動作成" width="1280" height="960" loading="lazy" />
+          <span class="tag">Dynamo · Family</span>
         </div>
       </article>
     </div>
@@ -125,7 +137,7 @@ import NewsSection from '../components/NewsSection.astro';
         ご自社のテンプレートに合わせたカスタマイズや、無償トライアルもご用意しています。<br />
         まずはお気軽にお問い合わせください。
       </p>
-      <a href="#" class="btn btn-primary">資料請求はこちら</a>
+      <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">資料請求はこちら</a>
     </div>
   </section>
 
@@ -133,9 +145,9 @@ import NewsSection from '../components/NewsSection.astro';
   <section id="services" class="services-section">
     <div class="shell">
       <div class="section-head-c">
-        <span class="eyebrow">Service</span>
-        <h2>提供サービス</h2>
-        <p>プロダクト提供に加え、建築×AIを軸にしたAIモデル開発・画像生成・R&amp;D共同研究・PoCまで幅広く承ります。「何から始めればいいか分からない」段階のご相談・課題整理から実施します。</p>
+        <span class="eyebrow">Consulting</span>
+        <h2>AI開発・コンサルティング</h2>
+        <p class="lead">プロダクト提供に加え、建築×AIを軸にしたAIモデル開発・画像生成・R&amp;D共同研究・PoCまで幅広く承ります。<br /><strong>「何から始めればいいか分からない」段階のご相談・課題整理から実施します。</strong></p>
       </div>
 
       <div class="services-grid">
@@ -146,7 +158,6 @@ import NewsSection from '../components/NewsSection.astro';
               <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/>
             </svg>
           </div>
-          <div class="num">01</div>
           <h3>AIモデル開発</h3>
           <div class="en-label">AI Model</div>
           <p>建築・設計領域に特化した独自AIモデルの設計・学習・チューニングを行います。要件定義から実装まで一貫して対応。</p>
@@ -165,7 +176,6 @@ import NewsSection from '../components/NewsSection.astro';
               <path d="M3 17l5-5 4 4 4-4 5 5"/>
             </svg>
           </div>
-          <div class="num">02</div>
           <h3>画像生成ワークフロー開発</h3>
           <div class="en-label">Image Generation</div>
           <p>パース・ビジュアライゼーション・素材生成など、画像生成AIを活用した制作ワークフローを設計・実装します。</p>
@@ -183,7 +193,6 @@ import NewsSection from '../components/NewsSection.astro';
               <path d="M9 2h6M8 14h8"/>
             </svg>
           </div>
-          <div class="num">03</div>
           <h3>R&amp;D共同研究</h3>
           <div class="en-label">Joint R&amp;D</div>
           <p>大学・研究機関・企業様と、建築×AIの先端領域における共同研究を実施。論文・特許化までご支援します。</p>
@@ -201,7 +210,6 @@ import NewsSection from '../components/NewsSection.astro';
               <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
             </svg>
           </div>
-          <div class="num">04</div>
           <h3>PoC設計・検証</h3>
           <div class="en-label">PoC</div>
           <p>「AIで何ができるか分からない」段階から伴走。課題整理・仮説設計から短期PoCの実装・効果検証までご支援します。</p>
@@ -242,7 +250,7 @@ import NewsSection from '../components/NewsSection.astro';
           <strong>「AIで何ができるか分からない」段階からご相談ください。</strong>
           <span>課題整理・要件定義からご一緒します。初回相談・ヒアリングは無償。全国オンラインで対応します。</span>
         </div>
-        <a href="#cta" class="btn btn-primary">まずは相談する</a>
+        <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">まずは相談する</a>
       </div>
     </div>
   </section>
@@ -321,3 +329,25 @@ import NewsSection from '../components/NewsSection.astro';
 
   <Footer />
 </Layout>
+
+<script>
+  // Lite YouTube embed: replace thumbnail with iframe on click
+  document.querySelectorAll<HTMLElement>('.hero-video[data-yt-id]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.ytId;
+      if (!id) return;
+      const params = new URLSearchParams({
+        autoplay: '1',
+        rel: '0',
+        modestbranding: '1',
+        playsinline: '1',
+      });
+      el.innerHTML = `<iframe
+        src="https://www.youtube-nocookie.com/embed/${id}?${params.toString()}"
+        title="プロダクト紹介動画"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>`;
+    });
+  });
+</script>

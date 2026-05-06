@@ -97,8 +97,8 @@ img { display: block; max-width: 100%; }
 }
 .hero-inner {
   position: relative; z-index: 1;
-  max-width: 1200px; margin: 0 auto; padding: 0 32px;
-  display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center;
+  max-width: 1400px; margin: 0 auto; padding: 0 32px;
+  display: grid; grid-template-columns: 0.85fr 1.4fr; gap: 48px; align-items: center;
 }
 .hero-eyebrow {
   color: var(--gold-300); margin-bottom: 20px;
@@ -168,13 +168,13 @@ img { display: block; max-width: 100%; }
 .btn-ghost:hover { color: var(--gold-700); }
 .btn-ghost:hover::after { transform: translateX(4px); }
 
-/* Hero visual — blank placeholder */
+/* Hero visual — video / placeholder */
 .hero-visual {
   position: relative;
   background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(201, 168, 86, 0.06) 100%);
   border: 1px solid rgba(201, 168, 86, 0.25);
   border-radius: var(--r-card);
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
@@ -194,6 +194,57 @@ img { display: block; max-width: 100%; }
   position: absolute; bottom: 16px; right: 20px;
   font-family: var(--font-en); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--gold-300); z-index: 2;
+}
+
+/* Hero video (lite YouTube embed) */
+.hero-video {
+  position: absolute; inset: 0;
+  cursor: pointer;
+  border: 0; padding: 0;
+  background: var(--navy-900);
+  overflow: hidden;
+}
+.hero-video-thumb {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-base) var(--ease-out), filter var(--dur-base) var(--ease-out);
+}
+.hero-video::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10, 27, 51, 0.0) 50%, rgba(10, 27, 51, 0.35) 100%);
+  pointer-events: none;
+}
+.hero-video-play {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px; height: 76px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(15, 22, 32, 0.7);
+  border: 1px solid rgba(201, 168, 86, 0.6);
+  border-radius: 50%;
+  color: var(--white);
+  transition: transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  z-index: 1;
+}
+.hero-video-play svg {
+  width: 26px; height: 26px;
+  margin-left: 4px;
+  fill: currentColor;
+}
+.hero-video:hover .hero-video-thumb {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+.hero-video:hover .hero-video-play {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: var(--gold-700);
+  border-color: var(--gold-500);
+  color: var(--navy-900);
+}
+.hero-video iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0;
 }
 
 /* gold corner ornaments */
@@ -475,6 +526,11 @@ img { display: block; max-width: 100%; }
     linear-gradient(90deg, rgba(45, 107, 224, 0.05) 1px, transparent 1px);
   background-size: 32px 32px;
 }
+.feature-visual img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  position: relative; z-index: 1;
+}
 .feature-visual.alt {
   background: var(--gold-50);
 }
@@ -542,6 +598,33 @@ img { display: block; max-width: 100%; }
 }
 .section-head-c p { color: var(--ink-600); font-size: 0.9375rem; line-height: 2; max-width: 600px; margin: 0 auto; }
 #clients .section-head-c p { max-width: none; }
+#services .section-head-c p.lead { max-width: none; }
+
+.section-head-c p.lead {
+  color: var(--ink-800);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 2.1;
+  max-width: 760px;
+  letter-spacing: 0.02em;
+  padding: 28px 0 0;
+  position: relative;
+}
+.section-head-c p.lead::before {
+  content: "";
+  display: block;
+  width: 48px; height: 1px;
+  background: var(--gold-500);
+  margin: 0 auto 24px;
+}
+.section-head-c p.lead strong {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--navy-900);
+  font-weight: 600;
+  background: linear-gradient(transparent 65%, var(--gold-100) 65%);
+  padding: 0 4px;
+}
 
 .steps {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -768,7 +851,7 @@ img { display: block; max-width: 100%; }
 }
 .footer-inner {
   max-width: 1200px; margin: 0 auto; padding: 0 32px;
-  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 56px;
+  display: grid; grid-template-columns: 1.8fr 1.2fr 1fr 1fr; gap: 56px;
 }
 .footer-brand img {
   height: 26px; filter: brightness(0) invert(1); opacity: 0.95;

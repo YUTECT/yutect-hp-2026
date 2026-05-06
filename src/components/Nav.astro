@@ -1,4 +1,6 @@
 ---
+import { CONTACT_FORM_URL } from '../lib/config';
+
 const links = [
   { href: '/#services', label: 'サービス' },
   { href: '/#features', label: 'Revit助人' },
@@ -13,6 +15,6 @@ const links = [
     <div class="nav-links">
       {links.map((link) => <a href={link.href}>{link.label}</a>)}
     </div>
-    <a href="/#cta" class="nav-cta">お問い合わせ</a>
+    <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="nav-cta">お問い合わせ</a>
   </div>
 </nav>

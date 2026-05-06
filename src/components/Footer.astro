@@ -1,18 +1,16 @@
 ---
-const productLinks = [
-  { href: '#', label: 'Revit助人' },
-  { href: '#', label: '設計AIアドイン' },
-  { href: '#', label: 'カスタム開発' },
+import { CONTACT_FORM_URL } from '../lib/config';
+
+const serviceLinks = [
+  { href: '/#features', label: 'Revit助人' },
+  { href: '/#services', label: 'AI開発・コンサルティング' },
 ];
 const companyLinks = [
   { href: '/#company', label: '会社概要' },
-  { href: '#', label: '採用情報' },
   { href: '/#news', label: 'ニュース' },
 ];
 const contactLinks = [
-  { href: '/#cta', label: 'お問い合わせ' },
-  { href: '/#cta', label: '資料請求' },
-  { href: '#', label: 'プライバシーポリシー' },
+  { href: CONTACT_FORM_URL, label: 'お問い合わせ', external: true },
 ];
 ---
 
@@ -23,9 +21,9 @@ const contactLinks = [
       <p>建築の未来を、テクノロジーで設計する。<br />YUTECTは、AIと建築の境界を再設計する企業です。</p>
     </div>
     <div class="footer-col">
-      <h5>Products</h5>
+      <h5>Services</h5>
       <ul>
-        {productLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        {serviceLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
       </ul>
     </div>
     <div class="footer-col">
@@ -37,7 +35,15 @@ const contactLinks = [
     <div class="footer-col">
       <h5>Contact</h5>
       <ul>
-        {contactLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        {contactLinks.map((link) => (
+          <li>
+            {link.external ? (
+              <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+            ) : (
+              <a href={link.href}>{link.label}</a>
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   </div>
