@@ -1,0 +1,136 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+import { CONTACT_FORM_URL } from '../../../lib/config';
+
+const pageTitle = 'Revit助人 — Revit自動設計AIアドイン | YUTECT';
+const description = 'Revit助人はRevit上で自然言語による設計操作を可能にするAIアドインです。対話によるモデリング、意匠・構造タスクの自動化、Dynamo連携まで広範な自動化機能を提供します。';
+---
+
+<Layout title={pageTitle} description={description}>
+  <Nav />
+
+  <!-- Product Hero -->
+  <section class="product-hero">
+    <div class="shell">
+      <a href="/" class="back-link">Back to Home</a>
+      <div class="product-hero-eyebrow">YUTECT Product 01</div>
+      <h1>Revit助人</h1>
+      <p class="product-tagline">Revitの自動設計AIアドイン</p>
+      <p class="product-lede">
+        建築設計の現場で繰り返される作業を、生成AIが学習し代行する。<br />
+        設計者は本質的な創造に集中し、品質と効率を両立する新しい時代の設計プロセスへ。
+      </p>
+      <div class="product-actions">
+        <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">資料請求</a>
+        <a href="/#features" class="btn btn-secondary">主要機能を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Placeholder body -->
+  <section class="product-body">
+    <div class="shell">
+      <div class="product-placeholder">
+        <span class="eyebrow">Coming Soon</span>
+        <h2>詳細ページは準備中です</h2>
+        <p>
+          Revit助人の詳細な機能紹介・導入事例・料金プランなどを、こちらのページに順次掲載していきます。<br />
+          ご質問・資料のご請求は、お問い合わせフォームよりお気軽にお寄せください。
+        </p>
+        <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">お問い合わせ</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .product-hero {
+    background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+    color: var(--white);
+    padding: 80px 0 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-hero::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(900px 500px at 85% 20%, rgba(201, 168, 86, 0.10), transparent 60%),
+      radial-gradient(700px 500px at 0% 100%, rgba(45, 107, 224, 0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .product-hero .shell {
+    position: relative; z-index: 1;
+    max-width: 880px;
+  }
+  .product-hero .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-en); font-size: 0.8125rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--navy-200); margin-bottom: 32px;
+    transition: color var(--dur-base) var(--ease-out);
+  }
+  .product-hero .back-link::before { content: "←"; }
+  .product-hero .back-link:hover { color: var(--gold-300); }
+
+  .product-hero-eyebrow {
+    color: var(--gold-300); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+    font-family: var(--font-en); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 500;
+  }
+  .product-hero-eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--gold-500); }
+
+  .product-hero h1 {
+    font-family: var(--font-jp);
+    font-size: clamp(2.25rem, 4vw, 3rem);
+    font-weight: 500; color: var(--white); letter-spacing: 0.06em; line-height: 1.15;
+    margin-bottom: 18px;
+  }
+
+  .product-tagline {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.9375rem; color: var(--navy-100); font-weight: 400;
+    margin: 0 0 28px; letter-spacing: 0.08em;
+    padding: 6px 0;
+    border-top: 1px solid rgba(201, 168, 86, 0.4);
+    border-bottom: 1px solid rgba(201, 168, 86, 0.4);
+    width: fit-content;
+  }
+  .product-tagline::before, .product-tagline::after {
+    content: ""; width: 4px; height: 4px; background: var(--gold-500); border-radius: 50%;
+  }
+
+  .product-lede {
+    font-size: 1rem; color: var(--navy-100); line-height: 2;
+    margin-bottom: 36px;
+  }
+
+  .product-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .product-actions .btn { padding: 14px 32px; font-size: 0.9375rem; border-radius: 999px; }
+
+  .product-body {
+    padding: 96px 0 128px;
+    background: var(--paper);
+  }
+  .product-placeholder {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 64px 32px;
+    background: var(--white);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-card);
+  }
+  .product-placeholder .eyebrow { display: block; margin-bottom: 16px; }
+  .product-placeholder h2 {
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+    font-weight: 500; color: var(--navy-900);
+    letter-spacing: 0.04em; margin-bottom: 20px;
+  }
+  .product-placeholder p {
+    color: var(--ink-600); line-height: 2; margin-bottom: 32px;
+    font-size: 0.9375rem;
+  }
+</style>
