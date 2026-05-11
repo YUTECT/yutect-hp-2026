@@ -893,13 +893,23 @@ img { display: block; max-width: 100%; }
 /* ============ Responsive ============ */
 @media (max-width: 960px) {
   .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-  .feature, .feature.reverse { grid-template-columns: 1fr; gap: 48px; padding: 48px 0; }
-  .feature.reverse .feature-text { order: unset; }
+  .feature, .feature.reverse { grid-template-columns: 1fr; gap: 20px; padding: 40px 0; }
+  /* Force consistent stacking order on mobile: text → visual (regardless of .reverse) */
+  .feature .feature-text { order: 1; }
+  .feature .feature-visual { order: 2; }
+  .feature.reverse .feature-text { order: 1; }
+  .feature.reverse .feature-visual { order: 2; }
+  /* Hide bullet list (3 sub items per feature) on mobile to keep it concise */
+  .feature-list { display: none; }
   .steps { grid-template-columns: repeat(2, 1fr); }
-  .step { border-right: 1px solid var(--ink-100); border-bottom: 1px solid var(--ink-100); }
+  .step { padding: 18px 12px; border-right: 1px solid var(--ink-100); border-bottom: 1px solid var(--ink-100); }
   .step:nth-child(even) { border-right: none; }
   .step:nth-last-child(-n+2) { border-bottom: none; }
   .step:not(:last-child)::after { display: none; }
+  /* Refined balance on mobile: STEP and number on the same line */
+  .step-num { font-size: 0.625rem; margin-bottom: 0; display: inline-flex; align-items: baseline; gap: 6px; }
+  .step-num strong { display: inline; font-size: 1rem; font-weight: 400; margin-top: 0; letter-spacing: 0.04em; }
+  .step-title { font-size: 0.75rem; margin-top: 8px; padding-top: 8px; letter-spacing: 0.04em; }
   .news-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .nav-links { display: none; }
@@ -907,7 +917,7 @@ img { display: block; max-width: 100%; }
   .company-row dt { border-right: none; border-bottom: 1px solid var(--ink-100); padding: 12px 24px; }
 }
 @media (max-width: 600px) {
-  .news-grid, .footer-inner, .steps { grid-template-columns: 1fr; }
-  .step { border-right: none !important; }
+  .news-grid, .footer-inner { grid-template-columns: 1fr; }
+  /* Keep .steps as 2x2 grid on phone (don't collapse to single column) */
   .hero { padding: 80px 0 96px; }
 }
