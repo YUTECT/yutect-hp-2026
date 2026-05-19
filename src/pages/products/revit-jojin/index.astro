@@ -1,0 +1,1087 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ProductNav from '../../../components/ProductNav.astro';
+import Footer from '../../../components/Footer.astro';
+import { CONTACT_FORM_URL } from '../../../lib/config';
+
+const pageTitle = 'Revit助人 — Revit自動設計AIアドイン | YUTECT';
+const description = 'Revit助人はRevit上で自然言語による設計操作を可能にするAIアドインです。対話によるモデリング、意匠・構造タスクの自動化、Dynamo連携まで広範な自動化機能を提供します。現在アルファ版を特別価格で先行提供中。';
+
+const sections = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'features', label: 'Features' },
+  { id: 'cases', label: 'Use Cases' },
+  { id: 'pricing', label: 'Pricing' },
+  { id: 'faq', label: 'FAQ' },
+];
+---
+
+<Layout title={pageTitle} description={description}>
+  <ProductNav productName="Revit助人" />
+
+  <!-- Sub Nav (in-page anchors) -->
+  <div class="product-subnav">
+    <div class="shell">
+      <ul>
+        {sections.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Page Title (visually hidden for SEO; will be displayed via banner image) -->
+  <h1 class="visually-hidden">Revit助人 — Revit自動設計AIアドイン</h1>
+
+  <!-- Banner Placeholder (差し替え予定) -->
+  <div class="product-banner">
+    <div class="shell">
+      <div class="banner-placeholder" role="img" aria-label="Revit助人 バナー（仮）">
+        <span class="banner-placeholder-label">Banner Image</span>
+        <span class="banner-placeholder-sub">1600 × 400 推奨 (4:1)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <section id="overview" class="product-section">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Overview</span>
+        <h2>製品概要</h2>
+      </div>
+
+      <div class="overview-grid">
+        <div class="overview-text">
+          <p class="overview-lead">
+            <strong>縁の下の創造性を、AIと共に。</strong><br />
+            Revit助人は、先進的なAI技術と建築の専門知識を融合し、Revit上での設計業務を自動化・補佐するAIアドインです。
+          </p>
+          <p>
+            BIM環境での反復作業（ファミリ作成、モデル調査、Dynamo操作、整合性チェック）に対し、設計者は自然言語で「やりたいこと」を伝えるだけ。AIエージェントが意図を解釈し、最適なRevit操作を提案・実行します。
+          </p>
+          <p>
+            操作手順を覚える時代から、意図を伝える時代へ。設計者の "副操縦士" として、Revit業務の入口を一新します。
+          </p>
+        </div>
+        <div class="overview-stats">
+          <div class="stat">
+            <span class="stat-num">2023〜2025</span>
+            <span class="stat-label">対応Revitバージョン</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">3</span>
+            <span class="stat-label">主要機能カテゴリー</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">Alpha</span>
+            <span class="stat-label">提供フェーズ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features (Tabbed Showcase) -->
+  <section id="features" class="product-section product-section-alt">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Live Showcase</span>
+        <h2>主要機能</h2>
+        <p class="section-lead">
+          タブを切り替えて、Revit助人が「どう動くか」を実際の対話例でご覧ください。
+        </p>
+      </div>
+
+      <!-- CSS-only tab switch via radios (positioned outside the inner container) -->
+      <input type="radio" name="feat-mode" id="feat-01" class="feat-radio" checked />
+      <input type="radio" name="feat-mode" id="feat-02" class="feat-radio" />
+      <input type="radio" name="feat-mode" id="feat-03" class="feat-radio" />
+
+      <div class="feat-showcase">
+        <!-- Tab list -->
+        <div class="feat-tabs" role="tablist">
+          <label for="feat-01" class="feat-tab" role="tab">
+            <span class="feat-tab-num">01</span>
+            <span class="feat-tab-en">Conversational</span>
+            <span class="feat-tab-ja">対話ベースの基本操作</span>
+          </label>
+          <label for="feat-02" class="feat-tab" role="tab">
+            <span class="feat-tab-num">02</span>
+            <span class="feat-tab-en">Design Task</span>
+            <span class="feat-tab-ja">設計タスク実行</span>
+          </label>
+          <label for="feat-03" class="feat-tab" role="tab">
+            <span class="feat-tab-num">03</span>
+            <span class="feat-tab-en">Automation</span>
+            <span class="feat-tab-ja">ファミリ作成・Dynamo連携</span>
+          </label>
+        </div>
+
+        <!-- Single active panel -->
+        <div class="feat-stage">
+          <!-- Panel 01 -->
+          <div class="feat-panel" data-panel="01">
+            <div class="feat-panel-info">
+              <p class="feat-panel-tagline">"話すだけ" でRevitが動く。</p>
+              <p class="feat-panel-desc">
+                チャットUIから自然言語で指示・質問するだけ。モデル内の要素・パラメータ・属性情報へ即座にアクセスし、不明点はその場で AI が回答します。
+              </p>
+              <div class="feat-prompts">
+                <div class="feat-prompts-label">Try these prompts</div>
+                <ul>
+                  <li>"このモデルの壁を全部集計して"</li>
+                  <li>"選択中の要素のIDをコピー"</li>
+                  <li>"この階の総床面積は？"</li>
+                  <li>"開き勝手記号の使い方を教えて"</li>
+                </ul>
+              </div>
+              <div class="feat-caps">
+                <span class="feat-cap">モデル情報照会</span>
+                <span class="feat-cap">要素フォーカス</span>
+                <span class="feat-cap">空間把握</span>
+                <span class="feat-cap">仕様の質問対応</span>
+              </div>
+            </div>
+
+            <div class="feat-panel-demo">
+              <div class="chat-demo">
+                <div class="chat-header">
+                  <span class="chat-dot"></span><span class="chat-dot"></span><span class="chat-dot"></span>
+                  <span class="chat-title">Revit助人 · Question Mode</span>
+                </div>
+                <div class="chat-body">
+                  <div class="chat-msg user">
+                    <div class="chat-avatar">U</div>
+                    <div class="chat-bubble">現在のモデルの壁を全て集計して</div>
+                  </div>
+                  <div class="chat-msg ai">
+                    <div class="chat-avatar ai-avatar">AI</div>
+                    <div class="chat-bubble">
+                      このモデルには <strong>248枚</strong> の壁があります。<br />
+                      ・内壁 (W-100): 142枚<br />
+                      ・外壁 (EW-200): 64枚<br />
+                      ・パーティション (P-50): 42枚<br />
+                      <span class="chat-hint">→ 詳細リストを表示しますか？</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 02 -->
+          <div class="feat-panel" data-panel="02">
+            <div class="feat-panel-info">
+              <p class="feat-panel-tagline">要件文 → モデリング操作 を自動変換。</p>
+              <p class="feat-panel-desc">
+                壁・建具・グリッドの自動配置、断面処理、構造部材の整合性チェックなど、実務で頻出する設計タスクをAIが連続したフローで代行します。
+              </p>
+              <div class="feat-prompts">
+                <div class="feat-prompts-label">Try these prompts</div>
+                <ul>
+                  <li>"1階に通り芯を3mピッチで生成"</li>
+                  <li>"建具を一括配置（標準テンプレ準拠）"</li>
+                  <li>"選択範囲の寸法を全自動配置"</li>
+                  <li>"構造部材の整合性をチェック"</li>
+                </ul>
+              </div>
+              <div class="feat-caps">
+                <span class="feat-cap">意匠タスク</span>
+                <span class="feat-cap">構造タスク</span>
+                <span class="feat-cap">寸法・集計表自動生成</span>
+                <span class="feat-cap">整合性チェック</span>
+              </div>
+            </div>
+
+            <div class="feat-panel-demo">
+              <div class="chat-demo">
+                <div class="chat-header">
+                  <span class="chat-dot"></span><span class="chat-dot"></span><span class="chat-dot"></span>
+                  <span class="chat-title">Revit助人 · Design Mode</span>
+                </div>
+                <div class="chat-body">
+                  <div class="chat-msg user">
+                    <div class="chat-avatar">U</div>
+                    <div class="chat-bubble">1階に通り芯を3mピッチで生成して</div>
+                  </div>
+                  <div class="chat-msg ai">
+                    <div class="chat-avatar ai-avatar">AI</div>
+                    <div class="chat-bubble">
+                      通り芯を生成しました。<br />
+                      ・X方向: <strong>X1〜X8</strong> (8本)<br />
+                      ・Y方向: <strong>Y1〜Y6</strong> (6本)<br />
+                      ・間隔: 3,000mm<br />
+                      <span class="chat-hint">→ プレビューで確認しますか？</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 03 -->
+          <div class="feat-panel" data-panel="03">
+            <div class="feat-panel-info">
+              <p class="feat-panel-tagline">反復タスクを"スクリプト化"して再利用。</p>
+              <p class="feat-panel-desc">
+                カスタムファミリの自動作成や、Dynamoグラフの生成・編集・実行までAIが担当。社内テンプレート資産と連携し、組織全体のBIM自動化エンジンとして機能します。
+              </p>
+              <div class="feat-prompts">
+                <div class="feat-prompts-label">Try these prompts</div>
+                <ul>
+                  <li>"ドアの開き勝手記号をJIS仕様に一括変換"</li>
+                  <li>"親子扉のネストファミリを自動生成"</li>
+                  <li>"前回作ったDynamoグラフを再実行"</li>
+                  <li>"パネルファミリを社内ルール準拠で量産"</li>
+                </ul>
+              </div>
+              <div class="feat-caps">
+                <span class="feat-cap">カスタムファミリ自動作成</span>
+                <span class="feat-cap">Dynamo自動生成</span>
+                <span class="feat-cap">履歴DB保存</span>
+                <span class="feat-cap">スクリプト再実行</span>
+              </div>
+            </div>
+
+            <div class="feat-panel-demo">
+              <div class="chat-demo">
+                <div class="chat-header">
+                  <span class="chat-dot"></span><span class="chat-dot"></span><span class="chat-dot"></span>
+                  <span class="chat-title">Revit助人 · Dynamo Mode</span>
+                </div>
+                <div class="chat-body">
+                  <div class="chat-msg user">
+                    <div class="chat-avatar">U</div>
+                    <div class="chat-bubble">ドアの開き勝手記号をJIS仕様に一括変換して</div>
+                  </div>
+                  <div class="chat-msg ai">
+                    <div class="chat-avatar ai-avatar">AI</div>
+                    <div class="chat-bubble">
+                      Dynamoスクリプトを生成して実行します。<br />
+                      ・対象: ドア <strong>96枚</strong><br />
+                      ・処理: 開き勝手記号を JIS仕様<br />
+                      　　　 (左右開・両開・引違) に変換<br />
+                      <span class="chat-hint">→ 実行してよろしいですか？</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section id="cases" class="product-section">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Use Cases</span>
+        <h2>活用シーン</h2>
+      </div>
+
+      <div class="usecase-grid">
+        <article class="usecase-card">
+          <div class="usecase-icon">A</div>
+          <h3>ファミリ大量作成</h3>
+          <p>
+            建具・パネル・社内ルール準拠ファミリを、寸法仕様の指示だけでバッチ生成。手作業での「同じ作業の繰り返し」を解消します。
+          </p>
+        </article>
+        <article class="usecase-card">
+          <div class="usecase-icon">B</div>
+          <h3>モデル調査・質問応答</h3>
+          <p>
+            「この壁の構成は？」「総ドア数とサイズは？」などモデルへの質問に即答。チェックリスト作成や報告書の下書きも会話で進められます。
+          </p>
+        </article>
+        <article class="usecase-card">
+          <div class="usecase-icon">C</div>
+          <h3>Dynamo処理の自動化</h3>
+          <p>
+            「この壁のグループに窓を等間隔配置」「特定階層を全部フィルタリング」など、Dynamo知識がなくてもグラフを自動生成・実行できます。
+          </p>
+        </article>
+        <article class="usecase-card">
+          <div class="usecase-icon">D</div>
+          <h3>整合性チェック・修正</h3>
+          <p>
+            建具寸法の不整合検出、グリッド延長、要素の一括プロパティ更新。検出だけでなく修正案の提案・実行までAIが担当します。
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="product-section product-section-alt">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Pricing</span>
+        <h2>料金プラン</h2>
+        <p class="lead">
+          現在 Revit助人は <strong>アルファ版</strong> を提供中です。<br />
+          先行ユーザーの皆さまには、<strong>特別価格</strong> でご試用いただけます。
+        </p>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-card-head">
+          <span class="alpha-badge">Alpha Access</span>
+          <h3>先行ユーザー向け特別プラン</h3>
+        </div>
+        <ul class="pricing-benefits">
+          <li><strong>安価で試用可能</strong>：開発フェーズの今だけの先行価格</li>
+          <li><strong>開発チームへ直接フィードバック</strong>：要望や改善が直接製品に反映されます</li>
+          <li><strong>個別オンボーディング</strong>：操作レクチャー・PoC支援を含めて伴走</li>
+          <li><strong>正式版リリース時の優遇</strong>：継続利用での移行サポート</li>
+        </ul>
+        <p class="pricing-note">
+          具体的な金額は、ご利用想定（席数・対象業務・PoC範囲）に応じてご提案します。<br />
+          まずはお問い合わせください。
+        </p>
+        <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">アルファ版のご相談</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="product-section">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">FAQ</span>
+        <h2>よくあるご質問</h2>
+      </div>
+
+      <dl class="faq-list">
+        <div class="faq-item">
+          <dt>対応しているRevitのバージョンは？</dt>
+          <dd>Revit 2023 / 2024 / 2025 に対応しています。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>「アルファ版」とは具体的にどういう意味ですか？</dt>
+          <dd>正式版リリース前のフェーズで、機能の検証・精度向上を進めている段階です。先行ユーザーの皆さまには特別価格でご試用いただき、いただいたフィードバックを直接開発に反映していきます。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>導入までの流れは？</dt>
+          <dd>お問い合わせ → ヒアリング → 環境準備・初期設定 → 操作レクチャー → 試用開始、という流れで進めます。期間の目安はおおむね2〜4週間です。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>サポート体制は？</dt>
+          <dd>アルファ版期間中は開発チームが直接ご対応します。チャット・メール・必要に応じて個別MTGでサポートします。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>セキュリティは？</dt>
+          <dd>モデルデータはお客様の環境で扱われ、AIへの送信は最小限に抑える設計です。詳細はお問い合わせ時にご説明します。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>商用利用は可能ですか？</dt>
+          <dd>アルファ版期間中の商用利用範囲については、用途に応じて個別にご案内しています。お気軽にご相談ください。</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="cta-band-inner shell">
+      <div class="eyebrow">— Get in touch —</div>
+      <h2>アルファ版・導入のご相談</h2>
+      <p>
+        ご自社のテンプレートに合わせたカスタマイズ、PoCのご相談も承ります。<br />
+        まずはお気軽にお問い合わせください。
+      </p>
+      <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">お問い合わせはこちら</a>
+    </div>
+  </section>
+
+  <!-- Back to Home -->
+  <div class="product-back-bottom">
+    <div class="shell">
+      <a href="/" class="back-bottom-link">
+        <span aria-hidden="true">←</span> YUTECT トップページへ戻る
+      </a>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* In-page sub navigation */
+  .product-subnav {
+    position: sticky;
+    top: 68px;
+    z-index: 40;
+    background: rgba(251, 250, 247, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--ink-100);
+  }
+  .product-subnav .shell { padding: 0 32px; }
+  .product-subnav ul {
+    display: flex; gap: 32px;
+    margin: 0; padding: 0; list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .product-subnav ul::-webkit-scrollbar { display: none; }
+  .product-subnav li a {
+    display: inline-block;
+    padding: 14px 0;
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: 1px solid transparent;
+    transition: color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .product-subnav li a:hover {
+    color: var(--gold-700);
+    border-bottom-color: var(--gold-500);
+  }
+
+  /* Visually hidden (for screen readers / SEO) */
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Banner placeholder (replace with <img> when ready) */
+  .product-banner {
+    padding: 32px 0;
+    background: var(--paper);
+  }
+  .banner-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 1;
+    background:
+      linear-gradient(135deg, rgba(201, 168, 86, 0.04) 0%, rgba(15, 36, 68, 0.04) 100%);
+    border: 1px dashed var(--ink-300);
+    border-radius: var(--r-card);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner-placeholder::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(15, 36, 68, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 36, 68, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+  .banner-placeholder-label {
+    font-family: var(--font-en);
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-400);
+    font-weight: 500;
+    z-index: 1;
+  }
+  .banner-placeholder-sub {
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-300);
+    z-index: 1;
+  }
+
+  /* Alpha badge (used in pricing card) */
+  .alpha-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    background: linear-gradient(180deg, rgba(201, 168, 86, 0.18), rgba(201, 168, 86, 0.08));
+    border: 1px solid var(--gold-500);
+    border-radius: 999px;
+    color: var(--gold-700);
+    font-family: var(--font-jp);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .alpha-badge::before {
+    content: ""; width: 6px; height: 6px;
+    background: var(--gold-500); border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(201, 168, 86, 0.25);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Sections */
+  .product-section {
+    padding: 96px 0;
+    background: var(--paper);
+    scroll-margin-top: 120px;
+  }
+  .product-section-alt {
+    background: var(--white);
+    border-top: 1px solid var(--ink-100);
+    border-bottom: 1px solid var(--ink-100);
+  }
+
+  /* Overview */
+  .overview-grid {
+    display: grid; grid-template-columns: 1.6fr 1fr; gap: 64px;
+    max-width: 1080px; margin: 0 auto;
+    align-items: center;
+  }
+  .overview-text p {
+    color: var(--ink-700); line-height: 2; font-size: 0.9375rem;
+    margin-bottom: 24px;
+  }
+  .overview-text p.overview-lead {
+    font-size: 1.0625rem; color: var(--ink-800);
+    line-height: 2.1;
+  }
+  .overview-text p.overview-lead strong {
+    color: var(--navy-900); font-weight: 600;
+    background: linear-gradient(transparent 65%, var(--gold-100) 65%);
+    padding: 0 4px;
+  }
+  .overview-stats {
+    display: grid; gap: 16px;
+  }
+  .stat {
+    background: var(--white);
+    border: 1px solid var(--ink-100);
+    border-left: 3px solid var(--gold-500);
+    padding: 24px 28px;
+    border-radius: var(--r-card);
+  }
+  .stat-num {
+    display: block;
+    font-family: var(--font-en);
+    font-size: 1.625rem;
+    font-weight: 300;
+    color: var(--navy-900);
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--ink-500);
+    letter-spacing: 0.1em;
+  }
+
+  /* Section lead text */
+  .section-head-c .section-lead {
+    color: var(--ink-700);
+    font-size: 1rem;
+    line-height: 2;
+    max-width: 640px;
+    margin: 8px auto 0;
+  }
+
+  /* Tabbed Showcase (CSS-only with hidden radios) */
+  .feat-radio { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
+
+  .feat-showcase {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  /* Tab list */
+  .feat-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background: var(--paper);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-card) var(--r-card) 0 0;
+    overflow: hidden;
+  }
+  .feat-tab {
+    cursor: pointer;
+    padding: 22px 24px;
+    border-right: 1px solid var(--ink-100);
+    display: flex; flex-direction: column; gap: 6px;
+    transition: all var(--dur-base) var(--ease-out);
+    user-select: none;
+    position: relative;
+  }
+  .feat-tab:last-child { border-right: none; }
+  .feat-tab::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: var(--gold-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .feat-tab:hover { background: var(--gold-50); }
+  .feat-tab-num {
+    font-family: var(--font-en);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-700);
+    font-weight: 500;
+  }
+  .feat-tab-en {
+    font-family: var(--font-en);
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    color: var(--navy-900);
+    font-weight: 600;
+  }
+  .feat-tab-ja {
+    font-size: 0.8125rem;
+    color: var(--ink-600);
+    letter-spacing: 0.04em;
+  }
+
+  /* Active tab styling (driven by checked radio above) */
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"],
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"],
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"] {
+    background: var(--navy-900);
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"]::after,
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"]::after,
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"]::after {
+    transform: scaleX(1);
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"] .feat-tab-num,
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"] .feat-tab-num,
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"] .feat-tab-num {
+    color: var(--gold-300);
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"] .feat-tab-en,
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"] .feat-tab-en,
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"] .feat-tab-en {
+    color: var(--white);
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"] .feat-tab-ja,
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"] .feat-tab-ja,
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"] .feat-tab-ja {
+    color: var(--navy-200);
+  }
+
+  /* Stage (panel container) */
+  .feat-stage {
+    background: var(--white);
+    border: 1px solid var(--ink-100);
+    border-top: none;
+    border-radius: 0 0 var(--r-card) var(--r-card);
+    overflow: hidden;
+    position: relative;
+    min-height: 460px;
+  }
+
+  /* Panels: hidden by default, shown when corresponding radio is checked */
+  .feat-panel {
+    display: none;
+    grid-template-columns: 0.95fr 1.1fr;
+    gap: 48px;
+    padding: 48px 48px;
+    align-items: center;
+    animation: panel-fade 0.4s ease-out;
+  }
+  @keyframes panel-fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-panel[data-panel="01"],
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-panel[data-panel="02"],
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-panel[data-panel="03"] {
+    display: grid;
+  }
+
+  .feat-panel-tagline {
+    font-size: 1.25rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gold-300);
+  }
+  .feat-panel-desc {
+    color: var(--ink-700);
+    line-height: 2;
+    font-size: 0.9375rem;
+    margin-bottom: 28px;
+  }
+
+  .feat-prompts {
+    background: var(--paper);
+    border-left: 3px solid var(--gold-500);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+  }
+  .feat-prompts-label {
+    font-family: var(--font-en);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-700);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .feat-prompts ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .feat-prompts li {
+    font-family: ui-monospace, SFMono-Regular, Menlo, "Noto Sans JP", monospace;
+    font-size: 0.8125rem;
+    color: var(--ink-800);
+    line-height: 1.7;
+  }
+
+  .feat-caps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .feat-cap {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    background: var(--navy-50);
+    border: 1px solid var(--ink-100);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    color: var(--navy-700);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  /* Mock chat demo */
+  .chat-demo {
+    background: var(--navy-900);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(201, 168, 86, 0.2);
+  }
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .chat-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .chat-dot:first-child { background: rgba(255, 95, 86, 0.5); }
+  .chat-dot:nth-child(2) { background: rgba(255, 189, 46, 0.5); }
+  .chat-dot:nth-child(3) { background: rgba(39, 201, 63, 0.5); }
+  .chat-title {
+    margin-left: auto;
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--navy-200);
+    text-transform: uppercase;
+  }
+  .chat-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+  }
+  .chat-msg {
+    display: flex;
+    gap: 10px;
+    max-width: 92%;
+    animation: fade-up 0.5s ease-out backwards;
+  }
+  .chat-msg.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+    animation-delay: 0.1s;
+  }
+  .chat-msg.ai {
+    align-self: flex-start;
+    animation-delay: 0.4s;
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chat-avatar {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background: var(--navy-700);
+    color: var(--white);
+  }
+  .chat-avatar.ai-avatar {
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-700));
+    color: var(--navy-900);
+  }
+  .chat-bubble {
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    line-height: 1.85;
+  }
+  .chat-msg.user .chat-bubble {
+    background: var(--brand-blue);
+    color: var(--white);
+    border-bottom-right-radius: 2px;
+  }
+  .chat-msg.ai .chat-bubble {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--navy-100);
+    border-bottom-left-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .chat-msg.ai .chat-bubble strong {
+    color: var(--gold-300);
+    font-weight: 600;
+  }
+  .chat-hint {
+    display: block;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.75rem;
+    color: var(--gold-300);
+    letter-spacing: 0.04em;
+  }
+
+  /* Use Cases */
+  .usecase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 960px; margin: 0 auto;
+  }
+  .usecase-card {
+    background: var(--white);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-card);
+    padding: 32px 28px;
+    transition: all var(--dur-base) var(--ease-out);
+  }
+  .usecase-card:hover {
+    border-color: var(--gold-300);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .usecase-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    background: var(--gold-50);
+    border: 1px solid var(--gold-300);
+    color: var(--gold-700);
+    border-radius: var(--r-card);
+    font-family: var(--font-en);
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+  .usecase-card h3 {
+    font-size: 1.0625rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+  .usecase-card p {
+    color: var(--ink-700);
+    line-height: 1.95;
+    font-size: 0.875rem;
+  }
+
+  /* Pricing */
+  .pricing-card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid var(--gold-300);
+    border-radius: var(--r-card);
+    padding: 48px 48px 44px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--gold-500), var(--gold-700));
+  }
+  .pricing-card-head {
+    margin-bottom: 28px;
+  }
+  .pricing-card-head .alpha-badge {
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, rgba(201, 168, 86, 0.12), rgba(201, 168, 86, 0.04));
+    color: var(--gold-700);
+  }
+  .pricing-card h3 {
+    font-size: 1.375rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .pricing-benefits {
+    list-style: none; padding: 0; margin: 0 0 32px;
+    text-align: left;
+    display: grid; gap: 16px;
+  }
+  .pricing-benefits li {
+    position: relative;
+    padding-left: 28px;
+    font-size: 0.9375rem;
+    color: var(--ink-800);
+    line-height: 1.8;
+  }
+  .pricing-benefits li::before {
+    content: "✓";
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--gold-700);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .pricing-benefits li strong {
+    color: var(--navy-900);
+    font-weight: 600;
+  }
+  .pricing-note {
+    font-size: 0.875rem;
+    color: var(--ink-600);
+    line-height: 2;
+    margin-bottom: 28px;
+  }
+
+  /* FAQ */
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid; gap: 4px;
+  }
+  .faq-item {
+    background: var(--white);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-card);
+    padding: 28px 32px;
+  }
+  .faq-item dt {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy-900);
+    letter-spacing: 0.03em;
+    margin-bottom: 12px;
+    padding-left: 28px;
+    position: relative;
+  }
+  .faq-item dt::before {
+    content: "Q.";
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--gold-700);
+    font-family: var(--font-en);
+    font-weight: 600;
+  }
+  .faq-item dd {
+    margin: 0;
+    padding-left: 28px;
+    font-size: 0.9375rem;
+    color: var(--ink-700);
+    line-height: 2;
+    position: relative;
+  }
+  .faq-item dd::before {
+    content: "A.";
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--ink-400);
+    font-family: var(--font-en);
+    font-weight: 600;
+  }
+
+  /* Pricing lead text */
+  .section-head-c .lead {
+    color: var(--ink-700);
+    font-size: 1.0625rem;
+    line-height: 2.1;
+    max-width: 720px;
+    margin: 8px auto 0;
+  }
+  .section-head-c .lead strong {
+    color: var(--navy-900);
+    font-weight: 600;
+  }
+
+  /* Back to home link at bottom */
+  .product-back-bottom {
+    background: var(--paper);
+    padding: 40px 0;
+    border-top: 1px solid var(--ink-100);
+    text-align: center;
+  }
+  .back-bottom-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 28px;
+    font-family: var(--font-jp);
+    font-size: 0.875rem; font-weight: 500; letter-spacing: 0.06em;
+    color: var(--navy-800);
+    border: 1px solid var(--ink-200);
+    border-radius: var(--r-button);
+    background: var(--white);
+    transition: all var(--dur-base) var(--ease-out);
+  }
+  .back-bottom-link:hover {
+    color: var(--gold-700);
+    border-color: var(--gold-500);
+    background: var(--gold-50);
+    transform: translateX(-3px);
+  }
+
+  @media (max-width: 960px) {
+    .overview-grid { grid-template-columns: 1fr; gap: 40px; }
+    .usecase-grid { grid-template-columns: 1fr; }
+    .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-panel[data-panel="01"],
+    .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-panel[data-panel="02"],
+    .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-panel[data-panel="03"] {
+      grid-template-columns: 1fr;
+    }
+    .feat-panel { padding: 36px 32px; gap: 32px; }
+    .feat-tab { padding: 16px 14px; }
+    .feat-tab-en { font-size: 0.8125rem; }
+    .feat-tab-ja { font-size: 0.75rem; }
+  }
+  @media (max-width: 600px) {
+    .product-subnav ul { gap: 24px; }
+    .product-section { padding: 72px 0; }
+    .pricing-card { padding: 36px 28px; }
+    .faq-item { padding: 24px; }
+    .chat-body { padding: 18px; }
+    .chat-msg { max-width: 100%; }
+    .feat-tabs { grid-template-columns: 1fr; }
+    .feat-tab { border-right: none; border-bottom: 1px solid var(--ink-100); }
+    .feat-tab:last-child { border-bottom: none; }
+  }
+</style>

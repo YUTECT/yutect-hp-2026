@@ -1,0 +1,124 @@
+---
+import { CONTACT_FORM_URL } from '../lib/config';
+
+interface Props {
+  productName?: string;
+}
+
+const { productName = 'Revit助人' } = Astro.props;
+---
+
+<nav class="product-nav">
+  <div class="product-nav-inner">
+    <a href="/" class="product-nav-back" aria-label="YUTECT ホームページに戻る">
+      <span class="back-icon" aria-hidden="true">←</span>
+      <span class="back-text">YUTECT トップへ戻る</span>
+    </a>
+
+    <div class="product-nav-divider" aria-hidden="true"></div>
+
+    <div class="product-nav-title">
+      <span class="product-nav-name">{productName}</span>
+      <span class="product-nav-suffix">詳細ページ</span>
+    </div>
+
+    <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="product-nav-cta">
+      お問い合わせ
+    </a>
+  </div>
+</nav>
+
+<style>
+  .product-nav {
+    background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+    color: var(--white);
+    border-bottom: 1px solid rgba(201, 168, 86, 0.3);
+    position: sticky; top: 0; z-index: 50;
+    box-shadow: 0 1px 0 rgba(201, 168, 86, 0.15);
+  }
+  .product-nav-inner {
+    max-width: 1400px; margin: 0 auto; padding: 14px 32px;
+    display: flex; align-items: center; gap: 24px;
+  }
+
+  .product-nav-back {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--navy-100); font-size: 0.8125rem; font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 8px 16px 8px 12px;
+    border: 1px solid rgba(201, 168, 86, 0.25);
+    border-radius: var(--r-button);
+    background: rgba(255, 255, 255, 0.04);
+    transition: all var(--dur-base) var(--ease-out);
+    flex-shrink: 0;
+  }
+  .product-nav-back:hover {
+    background: rgba(201, 168, 86, 0.12);
+    border-color: var(--gold-500);
+    color: var(--gold-300);
+  }
+  .product-nav-back .back-icon {
+    font-family: var(--font-en);
+    font-size: 1.0625rem;
+    line-height: 1;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .product-nav-back:hover .back-icon { transform: translateX(-3px); }
+
+  .product-nav-divider {
+    width: 1px; height: 32px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  .product-nav-title {
+    display: flex; align-items: baseline; gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+  .product-nav-name {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-nav-suffix {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--navy-200);
+    letter-spacing: 0.1em;
+    padding-left: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    white-space: nowrap;
+  }
+
+  .product-nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 22px;
+    background: linear-gradient(180deg, var(--gold-500), var(--gold-700));
+    color: var(--navy-900); font-weight: 600; font-size: 0.8125rem;
+    border-radius: var(--r-button);
+    border: 1px solid var(--gold-700);
+    letter-spacing: 0.05em;
+    transition: all var(--dur-base) var(--ease-out);
+    flex-shrink: 0;
+  }
+  .product-nav-cta:hover {
+    background: linear-gradient(180deg, var(--gold-300), var(--gold-500));
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-gold);
+  }
+
+  @media (max-width: 720px) {
+    .product-nav-inner { padding: 12px 16px; gap: 12px; }
+    .product-nav-back { padding: 6px 10px; }
+    .product-nav-back .back-text { display: none; }
+    .product-nav-divider { display: none; }
+    .product-nav-name { font-size: 0.9375rem; }
+    .product-nav-suffix { font-size: 0.6875rem; padding-left: 10px; }
+    .product-nav-cta { padding: 8px 14px; font-size: 0.75rem; }
+  }
+</style>
