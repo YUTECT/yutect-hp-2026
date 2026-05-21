@@ -1,0 +1,1297 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ProductNav from '../../../components/ProductNav.astro';
+import Footer from '../../../components/Footer.astro';
+import { CONTACT_FORM_URL } from '../../../lib/config';
+
+const pageTitle = 'Revit助人 — Revit自動設計AIアドイン | YUTECT';
+const description = 'Revit助人はRevit上で自然言語による設計操作を可能にするAIアドインです。対話によるモデリング、意匠・構造タスクの自動化、Dynamo連携まで広範な自動化機能を提供します。現在アルファ版を提供中、導入のご相談を受け付けています。';
+
+const sections = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'features', label: 'Features' },
+  { id: 'pricing', label: 'Early Access' },
+  // { id: 'faq', label: 'FAQ' }, // 後で公開予定
+];
+
+const modes = [
+  {
+    no: '01',
+    id: 'design',
+    en: 'Design Mode',
+    ja: '意匠モード',
+    tagline: '意匠の手数を、まるごとAIへ。',
+    desc: '立ち上げの段取りから設計変更、図面化まで──意匠で発生する手数を、AIに任せる。',
+    capabilities: [
+      // desc は後で公開予定（/* */ を外して '' を消せば復活）
+      { title: '立ち上げ', desc: '' /* '通り芯・レベルを一括生成、壁・建具・部屋・階段までまとめて配置。' */ },
+      { title: '設計変更', desc: '' /* 'レベル／通り芯の一括移動、ドア・窓の向き反転、タイプ一括差し替え、パラメータ一括編集。' */ },
+      { title: '作図', desc: '' /* '通り芯から寸法を自動配置。タグ・注釈、平面／断面／立面ビューの作成。' */ },
+      { title: 'シート組み', desc: '' /* 'ビューの一括配置、シート複製、表示範囲・ビューフィルタの調整。' */ },
+      { title: '既存図面の取り込み', desc: '' /* 'DWG／IFC／RVTリンク、CADレイヤから塗りつぶし領域を一括生成。' */ },
+      { title: '仕上げ', desc: '' /* 'マテリアル適用、面ペイント、壁スイープ（幅木・笠木・廻り縁）。' */ },
+    ],
+    example: {
+      title: 'ドアファミリのベースセット作成',
+      prompt: '選択したドアファミリのベースセットを作成',
+      results: [
+        'X方向 X1〜X8（8本）、Y方向 Y1〜Y6（6本）を自動生成',
+        '通り芯間隔は一律 3,000mm（指示どおり）',
+        '配置後の確認プレビューを即時表示',
+      ],
+      youtubeId: 'vfMOIql8jeM',
+    },
+  },
+  {
+    no: '02',
+    id: 'structure',
+    en: 'Structure Mode',
+    ja: '構造モード',
+    tagline: '構造計算モデルを、Revit構造図へ。',
+    desc: '符号・寸法・伏図整理まで、構造図づくりに必要な手数をAIが減らす。',
+    capabilities: [
+      { title: '基礎・梁・柱の一括配置', desc: '' },
+      { title: '要素のオフセット変更', desc: '' },
+      { title: '伏図の整理（不要要素の非表示）', desc: '' },
+      { title: '勝ち負けの一括調整', desc: '' },
+      { title: '拘束の設定・解除', desc: '' },
+    ],
+    example: {
+      title: 'タグの一括配置',
+      prompt: '伏図の１FLにタグを一括配置',
+      results: [
+        'X方向 X1〜X6（6本、10,000mm間隔）を生成',
+        'Y方向 Y1〜Y5（5本、8,000mm間隔）を生成',
+        '意匠モデルとの取合いを自動チェックし、不整合を報告',
+      ],
+      youtubeId: '43e4P_Y-ur4',
+    },
+  },
+  {
+    no: '03',
+    id: 'family',
+    en: 'Family Mode',
+    ja: 'ファミリ作成モード',
+    tagline: '簡易ファミリ、もう自分で作らなくていい。',
+    desc: '姿図・手書き・社内ルール──インプットの形を問わず、ファミリを"使える状態"で出す。',
+    capabilities: [
+      { title: '社内ルールに準拠したファミリ作成・編集', desc: '' },
+      { title: 'タイプの追加・編集・削除', desc: '' },
+      { title: 'パラメータの作成', desc: '' },
+      { title: '参照面の作成', desc: '' },
+      { title: '寸法の作成', desc: '' },
+      { title: '拘束確認', desc: '' },
+    ],
+    example: {
+      title: 'ドアファミリの作成',
+      prompt: '一般的な片開のドアファミリを作成',
+      results: [
+        '対象ドア 96枚 を自動抽出',
+        '左右開・両開・引違の3種に分類して変換',
+        '変更ログをまとめて出力（差分の確認・取り消しに対応）',
+      ],
+      youtubeId: 'P8SHbbwI5Qw',
+    },
+  },
+  {
+    no: '04',
+    id: 'dynamo',
+    en: 'Dynamo Mode',
+    ja: 'Dynamoモード',
+    tagline: 'ノードを組まずに、Dynamoが動く。',
+    desc: '「こうしたい」を書くだけ。グラフはAIが組み、外部パッケージも自動で取り込む。',
+    capabilities: [
+      { title: '自然言語の指示から、Dynamoグラフを丸ごと生成', desc: '' },
+      { title: '外部パッケージも自動で検出・利用', desc: '' },
+      { title: '生成したグラフはそのまま自動実行', desc: '' },
+      { title: '過去に生成したグラフは再利用可能', desc: '' },
+    ],
+    example: {
+      title: '単線プランから壁の立ち上げ',
+      prompt: '単線プランの情報をもとに、Dynamoを起動し壁を作成するノードを作成し、実行',
+      results: [
+        '選択中の壁 12枚 を入力として認識',
+        '窓を1,500mm間隔で配置するノードグラフを自動構築',
+        '即時実行と、グラフの履歴保存（次回再利用可）を提案',
+      ],
+      youtubeId: 'J1qu6zmM6Ag',
+    },
+  },
+  {
+    no: '05',
+    id: 'question',
+    en: 'Question Mode',
+    ja: '質問モード',
+    tagline: 'モデルに、直接質問。',
+    desc: '「この部屋の面積は？」「この符号の建具どこ？」──探さない、開かない、即返す。',
+    capabilities: [
+      { title: 'モデル情報を自然言語で照会（面積・数量・パラメータ）', desc: '' },
+      { title: '要素を名前や条件で検索 → ビュー上でフォーカス', desc: '' },
+      { title: '要素IDリンクで該当箇所へジャンプ', desc: '' },
+      { title: '他人のモデル・古いモデルの"中身を読む"', desc: '' },
+      { title: '命名規則違反の発見', desc: '' },
+    ],
+    example: {
+      title: '命名規則の調査',
+      prompt: 'ファミリ命名規則におかしいものがないか調査',
+      results: [
+        '総壁数 248枚 をモデル全体から集計',
+        '内訳: 内壁 W-100 が 142枚 / 外壁 EW-200 が 64枚 / パーティション P-50 が 42枚',
+        '詳細リストの表示や、種別ごとのフォーカス操作を続けて提案',
+      ],
+      youtubeId: '2jlPjxINDIU',
+    },
+  },
+];
+---
+
+<Layout title={pageTitle} description={description}>
+  <ProductNav productName="Revit助人" />
+
+  <!-- Sub Nav (in-page anchors) -->
+  <div class="product-subnav">
+    <div class="shell">
+      <ul>
+        {sections.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Page Title (visually hidden for SEO; will be displayed via banner image) -->
+  <h1 class="visually-hidden">Revit助人 — Revit自動設計AIアドイン</h1>
+
+  <!-- Banner Placeholder — 後で復活予定（バナー画像差し替え時に解除）
+  <div class="product-banner">
+    <div class="shell">
+      <div class="banner-placeholder" role="img" aria-label="Revit助人 バナー（仮）">
+        <span class="banner-placeholder-label">Banner Image</span>
+        <span class="banner-placeholder-sub">1600 × 400 推奨 (4:1)</span>
+      </div>
+    </div>
+  </div>
+  -->
+
+
+  <!-- Overview -->
+  <section id="overview" class="product-section">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Overview</span>
+        <h2>製品概要</h2>
+      </div>
+
+      <div class="overview-body">
+        <div class="overview-text">
+          <p class="overview-lead">
+            <strong>縁の下の創造性を、AIと共に。</strong><br />
+            Revit助人は、先進的なAI技術と建築の専門知識を融合し、Revit上での設計業務を自動化・補佐するAIアドインです。
+          </p>
+          <p>
+            操作手順を覚える時代から、意図を伝える時代へ。設計者の "パートナー" として、Revit業務の入口を一新します。
+          </p>
+        </div>
+
+        <dl class="overview-meta">
+          <div class="overview-meta-row">
+            <dt>対応Revitバージョン</dt>
+            <dd>2023 / 2024 / 2025</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features (5 Modes) -->
+  <section id="features" class="product-section product-section-alt">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">5 Modes</span>
+        <h2>主要な機能 ─ 5つのモード</h2>
+        <p class="section-lead">
+          意匠 / 構造 / ファミリ / ダイナモ / 質問 ── 用途別に最適化された5つのモードを切り替えて、Revit助人の働きをご覧ください。
+        </p>
+      </div>
+
+      <!-- CSS-only tab switch via radios -->
+      {modes.map((m, i) => (
+        <input
+          type="radio"
+          name="feat-mode"
+          id={`feat-${m.no}`}
+          class="feat-radio"
+          checked={i === 0}
+        />
+      ))}
+
+      <div class="feat-showcase">
+        <!-- Tab list -->
+        <div class="feat-tabs" role="tablist">
+          {modes.map((m) => (
+            <label for={`feat-${m.no}`} class="feat-tab" role="tab">
+              <span class="feat-tab-num">{m.no}</span>
+              <span class="feat-tab-ja">{m.ja}</span>
+              <span class="feat-tab-en">{m.en}</span>
+            </label>
+          ))}
+        </div>
+
+        <!-- Panels -->
+        <div class="feat-stage">
+          {modes.map((m) => (
+            <div class="feat-panel" data-panel={m.no}>
+              <!-- Left: capabilities -->
+              <div class="feat-panel-info">
+                <p class="feat-panel-tagline">{m.tagline}</p>
+                <p class="feat-panel-desc">{m.desc}</p>
+
+                <div class="feat-can">
+                  <div class="feat-can-label">このモードでできること</div>
+                  <ul class="feat-can-list">
+                    {m.capabilities.map((c) => (
+                      <li class="feat-can-item">
+                        <span class="feat-can-title">{c.title}</span>
+                        {c.desc && <span class="feat-can-desc">{c.desc}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Right: example -->
+              <div class="feat-panel-example">
+                <div class="feat-example-eyebrow">Example</div>
+                <h3 class="feat-example-title">{m.example.title}</h3>
+
+                <div class="feat-example-prompt">
+                  <span class="feat-example-prompt-label">User Prompt</span>
+                  <p class="feat-example-prompt-text">"{m.example.prompt}"</p>
+                </div>
+
+                <div class="feat-video-wrap">
+                  <button
+                    class="feat-video"
+                    type="button"
+                    data-yt-id={m.example.youtubeId}
+                    aria-label={`${m.ja}のデモ動画を再生：${m.example.title}`}
+                  >
+                    <img
+                      class="feat-video-thumb"
+                      src={`https://i.ytimg.com/vi/${m.example.youtubeId}/maxresdefault.jpg`}
+                      alt={`${m.ja}のデモ動画サムネイル`}
+                      loading="lazy"
+                      width="1280"
+                      height="720"
+                    />
+                    <span class="feat-video-play" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z"/></svg>
+                    </span>
+                  </button>
+                </div>
+
+                <div class="feat-example-result">
+                  <span class="feat-example-result-label">AIが行ったこと</span>
+                  <ul>
+                    {m.example.results.map((r) => <li>{r}</li>)}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alpha (旧: Pricing) -->
+  <section id="pricing" class="product-section product-section-alt">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Early Access</span>
+        <h2>アルファ版のご案内</h2>
+      </div>
+
+      <div class="pricing-card pricing-card-simple">
+        <p class="pricing-note">
+          Revit助人は現在アルファ版を提供しています。<br />
+          ご興味をお持ちの方は、お問い合わせフォームよりご連絡ください。
+        </p>
+        <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">お問い合わせはこちら</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ — 後で公開予定（コンテンツ調整中）
+  <section id="faq" class="product-section">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">FAQ</span>
+        <h2>よくあるご質問</h2>
+      </div>
+
+      <dl class="faq-list">
+        <div class="faq-item">
+          <dt>対応しているRevitのバージョンは？</dt>
+          <dd>Revit 2023 / 2024 / 2025 に対応しています。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>「アルファ版」とは具体的にどういう意味ですか？</dt>
+          <dd>正式版リリース前のフェーズで、機能の検証・精度向上を進めている段階です。導入条件はお客様の用途に応じて個別にご相談のうえお決めしており、いただいたフィードバックは直接開発に反映していきます。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>導入までの流れは？</dt>
+          <dd>お問い合わせ → ヒアリング → 環境準備・初期設定 → 操作レクチャー → 試用開始、という流れで進めます。期間の目安はおおむね2〜4週間です。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>サポート体制は？</dt>
+          <dd>アルファ版期間中は開発チームが直接ご対応します。チャット・メール・必要に応じて個別MTGでサポートします。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>セキュリティは？</dt>
+          <dd>モデルデータはお客様の環境で扱われ、AIへの送信は最小限に抑える設計です。詳細はお問い合わせ時にご説明します。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>商用利用は可能ですか？</dt>
+          <dd>アルファ版期間中の商用利用範囲については、用途に応じて個別にご案内しています。お気軽にご相談ください。</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+  -->
+
+  <!-- CTA — 削除（Alpha セクションのお問い合わせボタンと重複していたため）
+  <section class="cta-band">
+    <div class="cta-band-inner shell">
+      <div class="eyebrow">— Get in touch —</div>
+      <h2>アルファ版・導入のご相談</h2>
+      <p>
+        ご自社のテンプレートに合わせたカスタマイズ、PoCのご相談も承ります。<br />
+        まずはお気軽にお問い合わせください。
+      </p>
+      <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">お問い合わせはこちら</a>
+    </div>
+  </section>
+  -->
+
+  <!-- Back to Home -->
+  <div class="product-back-bottom">
+    <div class="shell">
+      <a href="/" class="back-bottom-link">
+        <span aria-hidden="true">←</span> YUTECT トップページへ戻る
+      </a>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<script>
+  // Mobile accordion: re-tapping the open tab collapses it.
+  // Radios alone can't unselect; intercept click to clear `checked` when already active.
+  const mq = window.matchMedia('(max-width: 600px)');
+  document.querySelectorAll<HTMLLabelElement>('.feat-tab').forEach((label) => {
+    label.addEventListener('click', (e) => {
+      if (!mq.matches) return;
+      const id = label.getAttribute('for');
+      if (!id) return;
+      const radio = document.getElementById(id) as HTMLInputElement | null;
+      if (radio && radio.checked) {
+        e.preventDefault();
+        radio.checked = false;
+      }
+    });
+  });
+
+  // Lite YouTube embed: replace the button with an iframe so the iframe is a
+  // direct child of .feat-video-wrap (avoids button-as-replaced-element quirks).
+  document.querySelectorAll<HTMLButtonElement>('.feat-video[data-yt-id]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.ytId;
+      if (!id) return;
+      const params = new URLSearchParams({
+        autoplay: '1',
+        rel: '0',
+        modestbranding: '1',
+        playsinline: '1',
+      });
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
+      iframe.title = 'デモ動画';
+      iframe.setAttribute(
+        'allow',
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+      );
+      iframe.setAttribute('allowfullscreen', '');
+      // Scoped CSS won't reach dynamically-added iframes; set inline styles directly.
+      iframe.style.cssText =
+        'position:absolute;inset:0;width:100%;height:100%;border:0;display:block;';
+      btn.replaceWith(iframe);
+    });
+  });
+</script>
+
+<style>
+  /* In-page sub navigation */
+  .product-subnav {
+    position: sticky;
+    top: 68px;
+    z-index: 40;
+    background: rgba(251, 250, 247, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--ink-100);
+  }
+  .product-subnav .shell { padding: 0 32px; }
+  .product-subnav ul {
+    display: flex; gap: 32px;
+    margin: 0; padding: 0; list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .product-subnav ul::-webkit-scrollbar { display: none; }
+  .product-subnav li a {
+    display: inline-block;
+    padding: 14px 0;
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: 1px solid transparent;
+    transition: color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .product-subnav li a:hover {
+    color: var(--gold-700);
+    border-bottom-color: var(--gold-500);
+  }
+
+  /* Visually hidden (for screen readers / SEO) */
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Banner placeholder (replace with <img> when ready) */
+  .product-banner {
+    padding: 32px 0;
+    background: var(--paper);
+  }
+  .banner-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 1;
+    background:
+      linear-gradient(135deg, rgba(201, 168, 86, 0.04) 0%, rgba(15, 36, 68, 0.04) 100%);
+    border: 1px dashed var(--ink-300);
+    border-radius: var(--r-card);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner-placeholder::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(15, 36, 68, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 36, 68, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+  .banner-placeholder-label {
+    font-family: var(--font-en);
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-400);
+    font-weight: 500;
+    z-index: 1;
+  }
+  .banner-placeholder-sub {
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-300);
+    z-index: 1;
+  }
+
+  /* Alpha badge (used in pricing card) */
+  .alpha-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    background: linear-gradient(180deg, rgba(201, 168, 86, 0.18), rgba(201, 168, 86, 0.08));
+    border: 1px solid var(--gold-500);
+    border-radius: 999px;
+    color: var(--gold-700);
+    font-family: var(--font-jp);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .alpha-badge::before {
+    content: ""; width: 6px; height: 6px;
+    background: var(--gold-500); border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(201, 168, 86, 0.25);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Sections */
+  .product-section {
+    padding: 96px 0;
+    background: var(--paper);
+    scroll-margin-top: 120px;
+  }
+  .product-section-alt {
+    background: var(--white);
+    border-top: 1px solid var(--ink-100);
+    border-bottom: 1px solid var(--ink-100);
+  }
+
+  /* Overview */
+  .overview-body {
+    max-width: 800px; margin: 0 auto;
+  }
+  .overview-text p {
+    color: var(--ink-700); line-height: 2; font-size: 0.9375rem;
+    margin-bottom: 24px;
+  }
+  .overview-text p.overview-lead {
+    font-size: 1.0625rem; color: var(--ink-800);
+    line-height: 2.1;
+  }
+  .overview-text p.overview-lead strong {
+    color: var(--navy-900); font-weight: 600;
+    background: linear-gradient(transparent 65%, var(--gold-100) 65%);
+    padding: 0 4px;
+  }
+  .overview-meta {
+    margin: 32px 0 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--ink-100);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 36px;
+  }
+  .overview-meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .overview-meta dt {
+    font-family: var(--font-en);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-400);
+    font-weight: 600;
+  }
+  .overview-meta dd {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--ink-700);
+    letter-spacing: 0.03em;
+  }
+
+  /* Section lead text */
+  .section-head-c .section-lead {
+    color: var(--ink-700);
+    font-size: 1rem;
+    line-height: 2;
+    max-width: 640px;
+    margin: 8px auto 0;
+  }
+
+  /* Tabbed Showcase (CSS-only with hidden radios) */
+  .feat-radio { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
+
+  .feat-showcase {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  /* Tab list */
+  .feat-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    background: var(--paper);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-card) var(--r-card) 0 0;
+    overflow: hidden;
+  }
+  .feat-tab {
+    cursor: pointer;
+    padding: 22px 24px;
+    border-right: 1px solid var(--ink-100);
+    display: flex; flex-direction: column; gap: 6px;
+    transition: all var(--dur-base) var(--ease-out);
+    user-select: none;
+    position: relative;
+  }
+  .feat-tab:last-child { border-right: none; }
+  .feat-tab::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: var(--gold-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .feat-tab:hover { background: var(--gold-50); }
+  .feat-tab-num {
+    font-family: var(--font-en);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-700);
+    font-weight: 500;
+  }
+  .feat-tab-ja {
+    font-size: 0.95rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  .feat-tab-en {
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+    font-weight: 500;
+  }
+
+  /* Active tab styling (driven by checked radio above) */
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"],
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"],
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"],
+  .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-tab[for="feat-04"],
+  .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-tab[for="feat-05"] {
+    background: var(--navy-900);
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"]::after,
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"]::after,
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"]::after,
+  .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-tab[for="feat-04"]::after,
+  .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-tab[for="feat-05"]::after {
+    transform: scaleX(1);
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"] .feat-tab-num,
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"] .feat-tab-num,
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"] .feat-tab-num,
+  .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-tab[for="feat-04"] .feat-tab-num,
+  .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-tab[for="feat-05"] .feat-tab-num {
+    color: var(--gold-300);
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"] .feat-tab-en,
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"] .feat-tab-en,
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"] .feat-tab-en,
+  .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-tab[for="feat-04"] .feat-tab-en,
+  .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-tab[for="feat-05"] .feat-tab-en {
+    color: var(--white);
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"] .feat-tab-ja,
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"] .feat-tab-ja,
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"] .feat-tab-ja,
+  .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-tab[for="feat-04"] .feat-tab-ja,
+  .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-tab[for="feat-05"] .feat-tab-ja {
+    color: var(--navy-200);
+  }
+
+  /* Stage (panel container) */
+  .feat-stage {
+    background: var(--white);
+    border: 1px solid var(--ink-100);
+    border-top: none;
+    border-radius: 0 0 var(--r-card) var(--r-card);
+    overflow: hidden;
+    position: relative;
+    min-height: 460px;
+  }
+
+  /* Panels: hidden by default, shown when corresponding radio is checked */
+  .feat-panel {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    padding: 48px 48px;
+    align-items: center;
+    animation: panel-fade 0.4s ease-out;
+  }
+  @keyframes panel-fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-panel[data-panel="01"],
+  .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-panel[data-panel="02"],
+  .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-panel[data-panel="03"],
+  .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-panel[data-panel="04"],
+  .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-panel[data-panel="05"] {
+    display: grid;
+  }
+
+  .feat-panel-tagline {
+    font-size: 1.25rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gold-300);
+  }
+  .feat-panel-desc {
+    color: var(--ink-700);
+    line-height: 2;
+    font-size: 0.9375rem;
+    margin-bottom: 28px;
+  }
+
+  /* "このモードでできること" — PC: stacked list (title + optional desc) */
+  .feat-can-label {
+    font-size: 0.8125rem;
+    color: var(--ink-500);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .feat-can-list {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex; flex-direction: column;
+    gap: 18px;
+  }
+  .feat-can-title {
+    display: block;
+    font-size: 0.9375rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+    margin-bottom: 2px;
+  }
+  .feat-can-desc {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--ink-700);
+    line-height: 1.9;
+  }
+
+  /* Right column: Example */
+  .feat-panel-example {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .feat-example-eyebrow {
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-700);
+    font-weight: 600;
+  }
+  .feat-example-title {
+    font-size: 1.125rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .feat-example-prompt {
+    background: var(--navy-900);
+    border-radius: var(--r-card);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-md);
+  }
+  .feat-example-prompt-label {
+    display: block;
+    font-family: var(--font-en);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-300);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .feat-example-prompt-text {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, "Noto Sans JP", monospace;
+    font-size: 0.875rem;
+    color: var(--white);
+    line-height: 1.7;
+  }
+  .feat-example-result {
+    display: none; /* TODO: 後ほどコンテンツ調整して再表示 */
+    background: var(--paper);
+    border-left: 3px solid var(--gold-500);
+    padding: 14px 20px;
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+  }
+  .feat-example-result-label {
+    display: block;
+    font-family: var(--font-en);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-700);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .feat-example-result ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .feat-example-result li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 0.8125rem;
+    color: var(--ink-800);
+    line-height: 1.8;
+  }
+  .feat-example-result li::before {
+    content: "·";
+    position: absolute;
+    left: 4px; top: -2px;
+    color: var(--gold-700);
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  /* Demo video (Lite YouTube embed: thumb + play button until clicked) */
+  .feat-video-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    background: var(--ink-50);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--dur-base) var(--ease-out);
+  }
+  .feat-video-wrap:hover { box-shadow: var(--shadow-lg); }
+  .feat-video {
+    position: absolute; inset: 0;
+    display: block;
+    width: 100%; height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .feat-video-thumb {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .feat-video-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(15, 36, 68, 0.85);
+    color: var(--gold-300);
+    box-shadow: 0 6px 24px rgba(15, 36, 68, 0.35);
+    transition: transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+  }
+  .feat-video-play svg {
+    width: 24px; height: 24px;
+    fill: currentColor;
+    margin-left: 3px;
+  }
+  .feat-video-wrap:hover .feat-video-play {
+    transform: translate(-50%, -50%) scale(1.06);
+    background: var(--navy-900);
+  }
+  .feat-video-wrap iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  /* Pricing */
+  .pricing-card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid var(--gold-300);
+    border-radius: var(--r-card);
+    padding: 48px 48px 44px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--gold-500), var(--gold-700));
+  }
+  .pricing-card-head {
+    margin-bottom: 28px;
+  }
+  .pricing-card-head .alpha-badge {
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, rgba(201, 168, 86, 0.12), rgba(201, 168, 86, 0.04));
+    color: var(--gold-700);
+  }
+  .pricing-card h3 {
+    font-size: 1.375rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .pricing-benefits {
+    list-style: none; padding: 0; margin: 0 0 32px;
+    text-align: left;
+    display: grid; gap: 16px;
+  }
+  .pricing-benefits li {
+    position: relative;
+    padding-left: 28px;
+    font-size: 0.9375rem;
+    color: var(--ink-800);
+    line-height: 1.8;
+  }
+  .pricing-benefits li::before {
+    content: "✓";
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--gold-700);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .pricing-benefits li strong {
+    color: var(--navy-900);
+    font-weight: 600;
+  }
+  .pricing-note {
+    font-size: 0.875rem;
+    color: var(--ink-600);
+    line-height: 2;
+    margin-bottom: 28px;
+  }
+
+  /* Simplified Alpha card (no badge / no header h3) */
+  .pricing-card-simple {
+    padding: 48px 40px 40px;
+  }
+  .pricing-card-simple .pricing-note {
+    font-size: 1.0625rem;
+    line-height: 2.1;
+    color: var(--ink-800);
+    margin-bottom: 32px;
+  }
+
+  /* FAQ */
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid; gap: 4px;
+  }
+  .faq-item {
+    background: var(--white);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-card);
+    padding: 28px 32px;
+  }
+  .faq-item dt {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy-900);
+    letter-spacing: 0.03em;
+    margin-bottom: 12px;
+    padding-left: 28px;
+    position: relative;
+  }
+  .faq-item dt::before {
+    content: "Q.";
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--gold-700);
+    font-family: var(--font-en);
+    font-weight: 600;
+  }
+  .faq-item dd {
+    margin: 0;
+    padding-left: 28px;
+    font-size: 0.9375rem;
+    color: var(--ink-700);
+    line-height: 2;
+    position: relative;
+  }
+  .faq-item dd::before {
+    content: "A.";
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--ink-400);
+    font-family: var(--font-en);
+    font-weight: 600;
+  }
+
+  /* Pricing lead text */
+  .section-head-c .lead {
+    color: var(--ink-700);
+    font-size: 1.0625rem;
+    line-height: 2.1;
+    max-width: 720px;
+    margin: 8px auto 0;
+  }
+  .section-head-c .lead strong {
+    color: var(--navy-900);
+    font-weight: 600;
+  }
+
+  /* Back to home link at bottom */
+  .product-back-bottom {
+    background: var(--paper);
+    padding: 40px 0;
+    border-top: 1px solid var(--ink-100);
+    text-align: center;
+  }
+  .back-bottom-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 28px;
+    font-family: var(--font-jp);
+    font-size: 0.875rem; font-weight: 500; letter-spacing: 0.06em;
+    color: var(--navy-800);
+    border: 1px solid var(--ink-200);
+    border-radius: var(--r-button);
+    background: var(--white);
+    transition: all var(--dur-base) var(--ease-out);
+  }
+  .back-bottom-link:hover {
+    color: var(--gold-700);
+    border-color: var(--gold-500);
+    background: var(--gold-50);
+    transform: translateX(-3px);
+  }
+
+  @media (max-width: 960px) {
+    .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-panel[data-panel="01"],
+    .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-panel[data-panel="02"],
+    .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-panel[data-panel="03"],
+    .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-panel[data-panel="04"],
+    .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-panel[data-panel="05"] {
+      grid-template-columns: 1fr;
+    }
+    .feat-panel { padding: 36px 32px; gap: 32px; }
+    .feat-tab { padding: 14px 10px; }
+    .feat-tab-ja { font-size: 0.8125rem; }
+    .feat-tab-en { font-size: 0.625rem; letter-spacing: 0.15em; }
+  }
+  @media (max-width: 600px) {
+    .product-subnav ul { gap: 20px; }
+    .product-section { padding: 60px 0; }
+    .faq-item { padding: 24px; }
+
+    /* --- Section heads --- */
+    .section-head-c { margin-bottom: 36px; }
+    .section-head-c h2 {
+      font-size: 1.5rem;
+      line-height: 1.55;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+      text-wrap: balance;
+    }
+    .section-head-c .section-lead {
+      font-size: 0.875rem;
+      line-height: 1.85;
+      padding: 0 8px;
+      text-wrap: pretty;
+    }
+
+    /* --- Overview --- */
+    .overview-text p {
+      font-size: 0.875rem;
+      line-height: 1.85;
+      margin-bottom: 18px;
+      text-wrap: pretty;
+    }
+    .overview-text p.overview-lead {
+      font-size: 1rem;
+      line-height: 1.9;
+    }
+    .overview-meta {
+      margin-top: 24px;
+      padding-top: 18px;
+      gap: 10px 24px;
+    }
+
+    /* --- Feature panels (left: capabilities) --- */
+    .feat-panel-tagline {
+      font-size: 1.0625rem;
+      line-height: 1.55;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      text-wrap: balance;
+    }
+    .feat-panel-desc {
+      font-size: 0.875rem;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      text-wrap: pretty;
+    }
+    /* Mobile only: collapse capabilities into an inline " / " separated list */
+    .feat-can-label { font-size: 0.75rem; margin-bottom: 10px; }
+    .feat-can-list {
+      display: block;
+      line-height: 1.85;
+    }
+    .feat-can-item { display: inline; }
+    .feat-can-item:not(:last-child)::after {
+      content: " / ";
+      color: var(--ink-300);
+      font-weight: 400;
+      margin: 0 2px;
+    }
+    .feat-can-title {
+      display: inline;
+      font-size: 0.875rem;
+      margin-bottom: 0;
+    }
+    .feat-can-desc { display: none; }
+
+    /* --- Feature panels (right: example) --- */
+    .feat-panel-example { gap: 14px; }
+    .feat-example-eyebrow { font-size: 0.625rem; letter-spacing: 0.22em; }
+    .feat-example-title {
+      font-size: 1.0625rem;
+      line-height: 1.55;
+      text-wrap: balance;
+    }
+    .feat-example-prompt { padding: 14px 16px; }
+    .feat-example-prompt-label { font-size: 0.55rem; }
+    .feat-example-prompt-text {
+      font-size: 0.8125rem;
+      line-height: 1.65;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* --- Pricing / Early Access --- */
+    .pricing-card { padding: 32px 22px 28px; }
+    .pricing-card-simple { padding: 32px 22px 28px; }
+    .pricing-card-simple .pricing-note {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-bottom: 22px;
+      text-wrap: pretty;
+    }
+
+    /* Accordion layout: each tab acts as a header, panel expands directly below */
+    .feat-showcase {
+      display: flex;
+      flex-direction: column;
+      background: transparent;
+      max-width: none;
+    }
+    .feat-tabs,
+    .feat-stage {
+      display: contents;
+    }
+
+    /* Tab as accordion header */
+    .feat-tab {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 16px 18px;
+      background: var(--white);
+      border: 1px solid var(--ink-100);
+      border-radius: var(--r-card);
+      margin-bottom: 8px;
+    }
+    .feat-tab .feat-tab-num { font-size: 0.65rem; margin-right: 4px; }
+    .feat-tab .feat-tab-ja { font-size: 0.9375rem; flex: 1; }
+    .feat-tab .feat-tab-en { display: none; }
+
+    /* Open/close chevron — overrides the desktop gold underline */
+    .feat-tab::after {
+      content: "+";
+      position: static;
+      transform: none;
+      width: 22px; height: 22px;
+      background: var(--paper);
+      border: 1px solid var(--ink-200);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-en);
+      font-size: 0.95rem;
+      line-height: 1;
+      color: var(--navy-700);
+      font-weight: 500;
+      transition: transform var(--dur-base) var(--ease-out);
+    }
+
+    /* Order interleaves tabs and panels: tab1, panel1, tab2, panel2, ... */
+    .feat-tab[for="feat-01"] { order: 1; }
+    .feat-tab[for="feat-02"] { order: 3; }
+    .feat-tab[for="feat-03"] { order: 5; }
+    .feat-tab[for="feat-04"] { order: 7; }
+    .feat-tab[for="feat-05"] { order: 9; }
+    .feat-panel[data-panel="01"] { order: 2; }
+    .feat-panel[data-panel="02"] { order: 4; }
+    .feat-panel[data-panel="03"] { order: 6; }
+    .feat-panel[data-panel="04"] { order: 8; }
+    .feat-panel[data-panel="05"] { order: 10; }
+
+    /* Active tab connects with the panel below */
+    .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"],
+    .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"],
+    .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"],
+    .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-tab[for="feat-04"],
+    .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-tab[for="feat-05"] {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-color: transparent;
+      margin-bottom: 0;
+    }
+    .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"]::after,
+    .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"]::after,
+    .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"]::after,
+    .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-tab[for="feat-04"]::after,
+    .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-tab[for="feat-05"]::after {
+      content: "−";
+      background: var(--navy-900);
+      border-color: var(--navy-900);
+      color: var(--gold-300);
+    }
+    .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-tab[for="feat-01"] .feat-tab-ja,
+    .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-tab[for="feat-02"] .feat-tab-ja,
+    .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-tab[for="feat-03"] .feat-tab-ja,
+    .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-tab[for="feat-04"] .feat-tab-ja,
+    .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-tab[for="feat-05"] .feat-tab-ja {
+      color: var(--white);
+    }
+
+    /* Open panel sits under its tab as one card */
+    .feat-radio:nth-of-type(1):checked ~ .feat-showcase .feat-panel[data-panel="01"],
+    .feat-radio:nth-of-type(2):checked ~ .feat-showcase .feat-panel[data-panel="02"],
+    .feat-radio:nth-of-type(3):checked ~ .feat-showcase .feat-panel[data-panel="03"],
+    .feat-radio:nth-of-type(4):checked ~ .feat-showcase .feat-panel[data-panel="04"],
+    .feat-radio:nth-of-type(5):checked ~ .feat-showcase .feat-panel[data-panel="05"] {
+      background: var(--white);
+      border: 1px solid var(--ink-100);
+      border-top: none;
+      border-radius: 0 0 var(--r-card) var(--r-card);
+      margin-bottom: 8px;
+      padding: 24px 18px 28px;
+      gap: 22px;
+    }
+  }
+</style>
