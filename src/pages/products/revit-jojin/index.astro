@@ -187,9 +187,6 @@ const modes = [
             Revit助人は、先進的なAI技術と建築の専門知識を融合し、Revit上での設計業務を自動化・補佐するAIアドインです。
           </p>
           <p>
-            BIM環境での反復作業（ファミリ作成、モデル調査、Dynamo操作、整合性チェック）に対し、設計者は自然言語で「やりたいこと」を伝えるだけ。AIエージェントが意図を解釈し、最適なRevit操作を提案・実行します。
-          </p>
-          <p>
             操作手順を覚える時代から、意図を伝える時代へ。設計者の "パートナー" として、Revit業務の入口を一新します。
           </p>
         </div>
@@ -758,7 +755,7 @@ const modes = [
     margin-bottom: 28px;
   }
 
-  /* "このモードでできること" — plain text block */
+  /* "このモードでできること" — PC: stacked list (title + optional desc) */
   .feat-can-label {
     font-size: 0.8125rem;
     color: var(--ink-500);
@@ -1097,10 +1094,103 @@ const modes = [
     .feat-tab-en { font-size: 0.625rem; letter-spacing: 0.15em; }
   }
   @media (max-width: 600px) {
-    .product-subnav ul { gap: 24px; }
-    .product-section { padding: 72px 0; }
-    .pricing-card { padding: 36px 28px; }
+    .product-subnav ul { gap: 20px; }
+    .product-section { padding: 60px 0; }
     .faq-item { padding: 24px; }
+
+    /* --- Section heads --- */
+    .section-head-c { margin-bottom: 36px; }
+    .section-head-c h2 {
+      font-size: 1.5rem;
+      line-height: 1.55;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+      text-wrap: balance;
+    }
+    .section-head-c .section-lead {
+      font-size: 0.875rem;
+      line-height: 1.85;
+      padding: 0 8px;
+      text-wrap: pretty;
+    }
+
+    /* --- Overview --- */
+    .overview-text p {
+      font-size: 0.875rem;
+      line-height: 1.85;
+      margin-bottom: 18px;
+      text-wrap: pretty;
+    }
+    .overview-text p.overview-lead {
+      font-size: 1rem;
+      line-height: 1.9;
+    }
+    .overview-meta {
+      margin-top: 24px;
+      padding-top: 18px;
+      gap: 10px 24px;
+    }
+
+    /* --- Feature panels (left: capabilities) --- */
+    .feat-panel-tagline {
+      font-size: 1.0625rem;
+      line-height: 1.55;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      text-wrap: balance;
+    }
+    .feat-panel-desc {
+      font-size: 0.875rem;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      text-wrap: pretty;
+    }
+    /* Mobile only: collapse capabilities into an inline " / " separated list */
+    .feat-can-label { font-size: 0.75rem; margin-bottom: 10px; }
+    .feat-can-list {
+      display: block;
+      line-height: 1.85;
+    }
+    .feat-can-item { display: inline; }
+    .feat-can-item:not(:last-child)::after {
+      content: " / ";
+      color: var(--ink-300);
+      font-weight: 400;
+      margin: 0 2px;
+    }
+    .feat-can-title {
+      display: inline;
+      font-size: 0.875rem;
+      margin-bottom: 0;
+    }
+    .feat-can-desc { display: none; }
+
+    /* --- Feature panels (right: example) --- */
+    .feat-panel-example { gap: 14px; }
+    .feat-example-eyebrow { font-size: 0.625rem; letter-spacing: 0.22em; }
+    .feat-example-title {
+      font-size: 1.0625rem;
+      line-height: 1.55;
+      text-wrap: balance;
+    }
+    .feat-example-prompt { padding: 14px 16px; }
+    .feat-example-prompt-label { font-size: 0.55rem; }
+    .feat-example-prompt-text {
+      font-size: 0.8125rem;
+      line-height: 1.65;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* --- Pricing / Early Access --- */
+    .pricing-card { padding: 32px 22px 28px; }
+    .pricing-card-simple { padding: 32px 22px 28px; }
+    .pricing-card-simple .pricing-note {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-bottom: 22px;
+      text-wrap: pretty;
+    }
 
     /* Accordion layout: each tab acts as a header, panel expands directly below */
     .feat-showcase {
@@ -1200,8 +1290,8 @@ const modes = [
       border-top: none;
       border-radius: 0 0 var(--r-card) var(--r-card);
       margin-bottom: 8px;
-      padding: 28px 22px 32px;
-      gap: 28px;
+      padding: 24px 18px 28px;
+      gap: 22px;
     }
   }
 </style>
