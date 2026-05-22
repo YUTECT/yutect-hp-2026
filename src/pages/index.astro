@@ -343,23 +343,22 @@ import { CONTACT_FORM_URL } from '../lib/config';
 </Layout>
 
 <script>
-  // Lite YouTube embed: replace thumbnail with iframe on click
+  // Autoplay (muted) on load — browsers allow autoplay only when muted.
   document.querySelectorAll<HTMLElement>('.hero-video[data-yt-id]').forEach((el) => {
-    el.addEventListener('click', () => {
-      const id = el.dataset.ytId;
-      if (!id) return;
-      const params = new URLSearchParams({
-        autoplay: '1',
-        rel: '0',
-        modestbranding: '1',
-        playsinline: '1',
-      });
-      el.innerHTML = `<iframe
-        src="https://www.youtube-nocookie.com/embed/${id}?${params.toString()}"
-        title="プロダクト紹介動画"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>`;
+    const id = el.dataset.ytId;
+    if (!id) return;
+    const params = new URLSearchParams({
+      autoplay: '1',
+      mute: '1',
+      rel: '0',
+      modestbranding: '1',
+      playsinline: '1',
     });
+    el.innerHTML = `<iframe
+      src="https://www.youtube-nocookie.com/embed/${id}?${params.toString()}"
+      title="プロダクト紹介動画"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>`;
   });
 </script>
