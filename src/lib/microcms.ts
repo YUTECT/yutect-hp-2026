@@ -128,8 +128,11 @@ function toFeedItem(item: News | Blog, type: FeedType): FeedItem {
   };
 }
 
-export async function getMergedFeed(limit = 4): Promise<FeedItem[]> {
-  const [news, blog] = await Promise.all([getNewsList(20), getBlogList(20)]);
+export async function getMergedFeed(limit = 4, fetchLimit = 20): Promise<FeedItem[]> {
+  const [news, blog] = await Promise.all([
+    getNewsList(fetchLimit),
+    getBlogList(fetchLimit),
+  ]);
   const feed: FeedItem[] = [
     ...news.map((n) => toFeedItem(n, 'NEWS')),
     ...blog.map((b) => toFeedItem(b, 'BLOG')),
