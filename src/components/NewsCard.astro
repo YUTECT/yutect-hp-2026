@@ -1,0 +1,36 @@
+---
+import { formatNewsDate, pickCategory, type FeedItem } from '../lib/microcms';
+
+interface Props {
+  item: FeedItem;
+}
+
+const { item } = Astro.props;
+const goldCategories = new Set(['RELEASE']);
+const category = pickCategory(item.category as string[] | undefined);
+const tagClass = category && goldCategories.has(category) ? 'news-tag gold' : 'news-tag';
+const date = formatNewsDate(item.publishedDate || item.publishedAt);
+const typeClass = item.type === 'BLOG' ? 'news-type blog' : 'news-type';
+const linkAttrs = item.isExternal
+  ? { href: item.href, target: '_blank', rel: 'noopener noreferrer' }
+  : { href: item.href };
+---
+
+<a class="news-card" {...linkAttrs}>
+  <div class="news-thumb">
+    <span class={typeClass}>{item.type}</span>
+    {item.thumbnail ? (
+      <img src={item.thumbnail.url} alt={item.title} width={item.thumbnail.width} height={item.thumbnail.height} />
+    ) : (
+      <span class="placeholder-label">{item.type === 'BLOG' ? 'Blog Image' : 'News Image'}</span>
+    )}
+  </div>
+  <div class="news-meta">
+    <div class="news-date">
+      {date}
+      {item.isExternal && <span class="news-external">External</span>}
+    </div>
+    <h4 class="news-title">{item.title}</h4>
+    {category && <span class={tagClass}>{category}</span>}
+  </div>
+</a>

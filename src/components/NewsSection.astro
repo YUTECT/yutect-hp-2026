@@ -1,10 +1,13 @@
 ---
-import { getMergedFeed, formatNewsDate, pickCategory, type FeedItem } from '../lib/microcms';
+import NewsCard from './NewsCard.astro';
+import { getMergedFeed, type FeedItem } from '../lib/microcms';
 
-const items: FeedItem[] = await getMergedFeed(4);
+const HIGHLIGHT_COUNT = 4;
+// Fetch slightly more than we display so we can tell whether a full list page is warranted.
+const items: FeedItem[] = await getMergedFeed(HIGHLIGHT_COUNT, 20);
+const all: FeedItem[] = await getMergedFeed(100, 100);
+const hasMore = all.length > HIGHLIGHT_COUNT;
 const gridClass = `news-grid news-grid-${Math.min(items.length, 4) || 4}`;
-
-const goldCategories = new Set(['RELEASE']);
 ---
 
 <section id="news" class="news-section">
@@ -19,35 +22,13 @@ const goldCategories = new Set(['RELEASE']);
       {items.length === 0 && (
         <div class="news-empty">記事はまだありません。</div>
       )}
-      {items.map((item) => {
-        const category = pickCategory(item.category as string[] | undefined);
-        const tagClass = category && goldCategories.has(category) ? 'news-tag gold' : 'news-tag';
-        const date = formatNewsDate(item.publishedDate || item.publishedAt);
-        const typeClass = item.type === 'BLOG' ? 'news-type blog' : 'news-type';
-        const linkAttrs = item.isExternal
-          ? { href: item.href, target: '_blank', rel: 'noopener noreferrer' }
-          : { href: item.href };
-        return (
-          <a class="news-card" {...linkAttrs}>
-            <div class="news-thumb">
-              <span class={typeClass}>{item.type}</span>
-              {item.thumbnail ? (
-                <img src={item.thumbnail.url} alt={item.title} width={item.thumbnail.width} height={item.thumbnail.height} />
-              ) : (
-                <span class="placeholder-label">{item.type === 'BLOG' ? 'Blog Image' : 'News Image'}</span>
-              )}
-            </div>
-            <div class="news-meta">
-              <div class="news-date">
-                {date}
-                {item.isExternal && <span class="news-external">External</span>}
-              </div>
-              <h4 class="news-title">{item.title}</h4>
-              {category && <span class={tagClass}>{category}</span>}
-            </div>
-          </a>
-        );
-      })}
+      {items.map((item) => <NewsCard item={item} />)}
     </div>
+
+    {hasMore && (
+      <div class="news-section-more-wrap">
+        <a href="/news/" class="news-section-more">すべての記事を見る <span aria-hidden="true">→</span></a>
+      </div>
+    )}
   </div>
 </section>

@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getMergedFeed } from '../../lib/microcms';
+
+const PAGE_SIZE = 16;
+const FETCH_LIMIT = 100;
+
+const all = await getMergedFeed(FETCH_LIMIT, FETCH_LIMIT);
+const totalPages = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
+const currentPage = 1;
+const items = all.slice(0, PAGE_SIZE);
+
+const pageTitle = 'ニュース＆コラム | YUTECT';
+const description = 'YUTECTのプロダクト・建築AIに関する最新ニュースとブログ記事の一覧です。';
+---
+
+<Layout title={pageTitle} description={description}>
+  <Nav />
+
+  <main class="news-list-page">
+    <section class="news-list-section">
+      <div class="shell">
+        <div class="section-head-c">
+          <span class="eyebrow">News &amp; Column</span>
+          <h2>ニュース＆コラム</h2>
+          <p>Revit助人および建築×AIに関する最新のお知らせとブログ記事一覧です。</p>
+        </div>
+
+        {items.length === 0 ? (
+          <div class="news-empty">記事はまだありません。</div>
+        ) : (
+          <div class="news-grid news-grid-list">
+            {items.map((item) => <NewsCard item={item} />)}
+          </div>
+        )}
+
+        <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/news" />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
