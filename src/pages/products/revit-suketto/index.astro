@@ -397,33 +397,37 @@ const modes = [
 </Layout>
 
 <script>
-  // Mobile accordion: re-tapping the open tab collapses it.
-  // Radios alone can't unselect; intercept click to clear `checked` when already active.
-  const mq = window.matchMedia('(max-width: 600px)');
-  document.querySelectorAll<HTMLLabelElement>('.feat-tab').forEach((label) => {
-    label.addEventListener('click', (e) => {
-      if (!mq.matches) return;
-      const id = label.getAttribute('for');
-      if (!id) return;
-      const radio = document.getElementById(id) as HTMLInputElement | null;
-      if (radio && radio.checked) {
-        e.preventDefault();
-        radio.checked = false;
-      }
-    });
-  });
+  // Tab-driven YouTube playback (muted)
+  //
+  // Behaviour:
+  //   - Each mode panel has one YouTube iframe controlled via the IFrame API.
+  //   - The initial panel ("01" / 意匠モード) starts when its video scrolls
+  //     into view (≥50% visible), one-shot.
+  //   - Switching to another tab pauses the previous video and plays the
+  //     newly-selected one (resumes from its last position).
+  //   - On mobile, re-tapping the open accordion header pauses the video
+  //     while collapsing the panel.
 
-  // Autoplay (muted) on load — replace each thumbnail button with a YouTube
-  // iframe. Browsers permit autoplay only when muted; mute=1 enforces that.
+  type YTPlayer = {
+    playVideo: () => void;
+    pauseVideo: () => void;
+    mute: () => void;
+  };
+
+  const mq = window.matchMedia('(max-width: 600px)');
+  const players: Record<string, YTPlayer> = {};
+
+  // 1. Build iframes — autoplay is dropped; we orchestrate playback below.
   document.querySelectorAll<HTMLButtonElement>('.feat-video[data-yt-id]').forEach((btn) => {
     const id = btn.dataset.ytId;
     if (!id) return;
     const params = new URLSearchParams({
-      autoplay: '1',
       mute: '1',
       rel: '0',
       modestbranding: '1',
       playsinline: '1',
+      enablejsapi: '1',
+      origin: location.origin,
     });
     const iframe = document.createElement('iframe');
     iframe.src = `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
@@ -433,10 +437,79 @@ const modes = [
       'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
     );
     iframe.setAttribute('allowfullscreen', '');
-    // Scoped CSS won't reach dynamically-added iframes; set inline styles directly.
     iframe.style.cssText =
       'position:absolute;inset:0;width:100%;height:100%;border:0;display:block;';
+    const panel = btn.closest('.feat-panel') as HTMLElement | null;
+    const no = panel?.dataset.panel;
+    if (no) iframe.dataset.panelNo = no;
     btn.replaceWith(iframe);
+  });
+
+  // 2. Load the YouTube IFrame API
+  const ytTag = document.createElement('script');
+  ytTag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(ytTag);
+
+  // 3. Wire up players once the API is ready
+  (window as any).onYouTubeIframeAPIReady = () => {
+    const YT = (window as any).YT;
+    document.querySelectorAll<HTMLIFrameElement>('iframe[data-panel-no]').forEach((iframe) => {
+      const no = iframe.dataset.panelNo!;
+      players[no] = new YT.Player(iframe, {
+        playerVars: { mute: 1 },
+        events: {
+          onReady: () => {
+            // Force the speaker icon to show the muted (×) state, not just volume=0.
+            players[no]?.mute();
+            // Initial panel: defer playback until the video scrolls into view.
+            if (no === '01') {
+              const wrap = iframe.parentElement;
+              if (!wrap) return;
+              const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    players[no]?.playVideo();
+                    observer.unobserve(entry.target);
+                  }
+                });
+              }, { threshold: 0.5 });
+              observer.observe(wrap);
+            }
+          },
+        },
+      });
+    });
+
+    // Tab switching: pause others, play the selected one (resumes from last pos)
+    document.querySelectorAll<HTMLInputElement>('.feat-radio').forEach((radio) => {
+      radio.addEventListener('change', () => {
+        Object.entries(players).forEach(([no, player]) => {
+          if (`feat-${no}` !== radio.id) player.pauseVideo();
+        });
+        if (radio.checked) {
+          const no = radio.id.replace('feat-', '');
+          players[no]?.playVideo();
+        }
+      });
+    });
+  };
+
+  // 4. Mobile accordion: re-tapping the open tab collapses it AND pauses video.
+  // (programmatic `checked = false` does NOT fire a `change` event,
+  // so we manually pause here.)
+  document.querySelectorAll<HTMLLabelElement>('.feat-tab').forEach((label) => {
+    label.addEventListener('click', (e) => {
+      if (!mq.matches) return;
+      const id = label.getAttribute('for');
+      if (!id) return;
+      const radio = document.getElementById(id) as HTMLInputElement | null;
+      if (radio && radio.checked) {
+        e.preventDefault();
+        radio.checked = false;
+        const no = id.replace('feat-', '');
+        players[no]?.pauseVideo();
+      }
+    });
   });
 </script>
 
