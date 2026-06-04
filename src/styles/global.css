@@ -976,13 +976,13 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid var(--ink-100);
 }
 .news-detail-thumb {
-  aspect-ratio: 16 / 9;
   margin-bottom: 40px;
   border-radius: var(--r-card);
   overflow: hidden;
   background: var(--ink-50);
 }
-.news-detail-thumb img { width: 100%; height: 100%; object-fit: cover; }
+/* 本来の比率で全体表示（16:9固定のcoverトリミングをやめ、左右の見切れを防止） */
+.news-detail-thumb img { display: block; width: 100%; height: auto; }
 .news-body {
   font-size: 1rem; line-height: 2; color: var(--ink-800);
 }
