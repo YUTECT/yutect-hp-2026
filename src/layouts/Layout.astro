@@ -5,17 +5,22 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogImageSquare?: string;
+  ogImageAlt?: string;
 }
 
 const {
   title = 'Revit助人 — Revitの自動設計AIアドイン | YUTECT',
   description = 'YUTECTは建築×AIで設計プロセスを再設計します。主力プロダクト「Revit助人」は、自然言語でRevitを操作する設計AIアドインです。',
   ogImage = '/assets/OGP_image.webp',
+  ogImageSquare = '/assets/OGP_image_square.webp',
+  ogImageAlt = 'YUTECT — Architectural Innovation with AI.',
 } = Astro.props;
 
 const SITE_URL = 'https://yutect.com';
 const canonicalUrl = new URL(Astro.url.pathname, SITE_URL).toString();
 const absoluteOgImage = new URL(ogImage, SITE_URL).toString();
+const absoluteOgImageSquare = new URL(ogImageSquare, SITE_URL).toString();
 ---
 
 <!DOCTYPE html>
@@ -48,9 +53,18 @@ const absoluteOgImage = new URL(ogImage, SITE_URL).toString();
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalUrl} />
+  <!-- 横長 1.91:1（X large / Facebook / LinkedIn / Discord 等の主表示用） -->
   <meta property="og:image" content={absoluteOgImage} />
+  <meta property="og:image:type" content="image/webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={ogImageAlt} />
+  <!-- 正方形 1:1（LINE / WhatsApp 等で正方形クロップされる際の見切れ防止用） -->
+  <meta property="og:image" content={absoluteOgImageSquare} />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="1200" />
+  <meta property="og:image:alt" content={ogImageAlt} />
   <meta property="og:locale" content="ja_JP" />
 
   <!-- Twitter / X -->
