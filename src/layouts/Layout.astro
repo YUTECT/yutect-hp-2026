@@ -68,10 +68,16 @@ const absoluteOgImageSquare = new URL(ogImageSquare, SITE_URL).toString();
   <meta property="og:locale" content="ja_JP" />
 
   <!-- Twitter / X -->
+  <!--
+    X は twitter:image を1枚だけ使い、カード形状（summary=1:1 / summary_large_image=1.91:1）
+    に合わせて自前でクロップする。正方形版はロゴが中央630px帯に収まっており、
+    1:1 でも 1.91:1 でも中央クロップで見切れないため、こちらを指定する。
+  -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={absoluteOgImage} />
+  <meta name="twitter:image" content={absoluteOgImageSquare} />
+  <meta name="twitter:image:alt" content={ogImageAlt} />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
