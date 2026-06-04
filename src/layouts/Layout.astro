@@ -53,25 +53,36 @@ const absoluteOgImageSquare = new URL(ogImageSquare, SITE_URL).toString();
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalUrl} />
-  <!-- 横長 1.91:1（X large / Facebook / LinkedIn / Discord 等の主表示用） -->
-  <meta property="og:image" content={absoluteOgImage} />
-  <meta property="og:image:type" content="image/webp" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={ogImageAlt} />
-  <!-- 正方形 1:1（LINE / WhatsApp 等で正方形クロップされる際の見切れ防止用） -->
+  <!--
+    1枚目=正方形(1:1)。LINE 等は最初の og:image を採用して正方形クロップするため、
+    見切れ防止に正方形を先頭へ。正方形の中央1200×630帯は横長版とほぼ同内容なので、
+    1.91:1 ワイド表示するプラットフォーム（Facebook/LinkedIn/Slack/Discord）が
+    中央クロップしてもロゴは欠けない。
+  -->
   <meta property="og:image" content={absoluteOgImageSquare} />
   <meta property="og:image:type" content="image/webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="1200" />
   <meta property="og:image:alt" content={ogImageAlt} />
+  <!-- 2枚目=横長 1.91:1。ワイドカードを比率優先で選ぶプラットフォーム向けの予備。 -->
+  <meta property="og:image" content={absoluteOgImage} />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={ogImageAlt} />
   <meta property="og:locale" content="ja_JP" />
 
   <!-- Twitter / X -->
+  <!--
+    X は twitter:image を1枚だけ使い、カード形状（summary=1:1 / summary_large_image=1.91:1）
+    に合わせて自前でクロップする。正方形版はロゴが中央630px帯に収まっており、
+    1:1 でも 1.91:1 でも中央クロップで見切れないため、こちらを指定する。
+  -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={absoluteOgImage} />
+  <meta name="twitter:image" content={absoluteOgImageSquare} />
+  <meta name="twitter:image:alt" content={ogImageAlt} />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
