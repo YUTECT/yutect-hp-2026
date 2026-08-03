@@ -8,9 +8,9 @@ const pageTitle = 'Revit助人 — Revit自動設計AIアドイン | YUTECT';
 const description = 'Revit助人はRevit上で自然言語による設計操作を可能にするAIアドインです。対話によるモデリング、意匠・構造タスクの自動化、Dynamo連携まで広範な自動化機能を提供します。現在アルファ版を提供中、導入のご相談を受け付けています。';
 
 const sections = [
+  { id: 'pricing', label: 'Early Access' },
   { id: 'overview', label: 'Overview' },
   { id: 'features', label: 'Features' },
-  { id: 'pricing', label: 'Early Access' },
   // { id: 'faq', label: 'FAQ' }, // 後で公開予定
 ];
 
@@ -166,6 +166,24 @@ const modes = [
   <!-- Page Title (visually hidden for SEO; will be displayed via banner image) -->
   <h1 class="visually-hidden">Revit助人 — Revit自動設計AIアドイン</h1>
 
+  <!-- Alpha (旧: Pricing) -->
+  <section id="pricing" class="product-section product-section-alt">
+    <div class="shell">
+      <div class="section-head-c">
+        <span class="eyebrow">Early Access</span>
+        <h2>アルファ版のご案内</h2>
+      </div>
+
+      <div class="pricing-card pricing-card-simple">
+        <p class="pricing-note">
+          Revit助人は現在アルファ版を提供しています。<br />
+          ご利用にはトライアルのお申し込みが必要です。お申し込み済みの方には、YUTECT担当者よりライセンスキーをメールで送付します。
+        </p>
+        <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">トライアル申し込みフォーム</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Banner Placeholder — 後で復活予定（バナー画像差し替え時に解除）
   <div class="product-banner">
     <div class="shell">
@@ -316,24 +334,6 @@ const modes = [
             </div>
           ))}
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Alpha (旧: Pricing) -->
-  <section id="pricing" class="product-section product-section-alt">
-    <div class="shell">
-      <div class="section-head-c">
-        <span class="eyebrow">Early Access</span>
-        <h2>アルファ版のご案内</h2>
-      </div>
-
-      <div class="pricing-card pricing-card-simple">
-        <p class="pricing-note">
-          Revit助人は現在アルファ版を提供しています。<br />
-          ご興味をお持ちの方は、お問い合わせフォームよりご連絡ください。
-        </p>
-        <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary">お問い合わせはこちら</a>
       </div>
     </div>
   </section>

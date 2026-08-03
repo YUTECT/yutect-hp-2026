@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .astro/
+.netlify/
 .vercel/
 .env
 .env.production
@@ -10,3 +11,4 @@ dist/
 _legacy/
 .claude/
 screenshot-*.png
+/sketto-*.zip
