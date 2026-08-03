@@ -7,6 +7,7 @@ interface Props {
   ogImage?: string;
   ogImageSquare?: string;
   ogImageAlt?: string;
+  robots?: string;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   ogImage = '/assets/OGP_image.webp',
   ogImageSquare = '/assets/OGP_image_square.webp',
   ogImageAlt = 'YUTECT — Architectural Innovation with AI.',
+  robots = 'index, follow',
 } = Astro.props;
 
 const SITE_URL = 'https://yutect.com';
@@ -39,6 +41,7 @@ const absoluteOgImageSquare = new URL(ogImageSquare, SITE_URL).toString();
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="robots" content={robots} />
   <link rel="canonical" href={canonicalUrl} />
 
   <!-- Favicons -->

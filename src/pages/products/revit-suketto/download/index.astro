@@ -1,0 +1,485 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import ProductNav from '../../../../components/ProductNav.astro';
+import Footer from '../../../../components/Footer.astro';
+import { CONTACT_FORM_URL, REVIT_SUKETTO_RELEASE } from '../../../../lib/config';
+
+const pageTitle = 'Revit助人 ダウンロード | YUTECT';
+const description =
+  'Revit自動設計AIアドイン「Revit助人」の公式ダウンロードページです。ご利用にはトライアルのお申し込みが必要です。お申し込み後、最大2営業日以内にYUTECT担当者よりメールでご案内します。';
+
+const release = REVIT_SUKETTO_RELEASE;
+const releaseDetails = [
+  { label: 'バージョン', value: release.version },
+  { label: '更新日', value: release.releasedAt || '設定後に表示' },
+  { label: '対応OS', value: 'Windows' },
+  { label: '対応Revit', value: '2023 / 2024 / 2025' },
+  { label: 'ファイルサイズ', value: release.fileSize || '設定後に表示' },
+];
+---
+
+<Layout
+  title={pageTitle}
+  description={description}
+  ogImage="/assets/OGP_revitsket_image.webp"
+  ogImageSquare="/assets/OGP_revitsket_image_square.webp"
+  ogImageAlt="Revit助人 — Revitの自動設計AIアドイン"
+  robots="noindex, nofollow, noarchive"
+>
+  <ProductNav
+    productName="Revit助人"
+    suffix="ダウンロード"
+  />
+
+  <main class="download-page">
+    <section class="download-hero">
+      <div class="shell download-hero-inner">
+        <div class="download-hero-copy">
+          <span class="eyebrow">Download</span>
+          <h1>Revit助人を<br class="download-title-break" />ダウンロード</h1>
+          <p>
+            Revit上での設計業務を、生成AIが自動化・補佐します。<br />
+            インストール前に、トライアルのお申し込みをお願いします。
+          </p>
+        </div>
+
+        <div class="download-release-card">
+          <div class="release-card-head">
+            <div>
+              <span class="release-kicker">Current release</span>
+              <h2>Revit助人 <span>{release.version}</span></h2>
+            </div>
+            <span class:list={['release-status', { ready: release.isAvailable }]}>
+              {release.isAvailable ? '配布中' : '準備中'}
+            </span>
+          </div>
+
+          <dl class="release-details">
+            {releaseDetails.map((detail) => (
+              <div>
+                <dt>{detail.label}</dt>
+                <dd>{detail.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div class="release-license-reminder">
+            <strong>ダウンロード前にトライアルをお申し込みください</strong>
+            <span>お申し込み後、最大2営業日以内にYUTECT担当者よりライセンスキーをメールで送付します。</span>
+          </div>
+
+          <div class="release-card-actions">
+            <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn release-application-button">
+              <span class="action-number">1</span>
+              トライアル申し込みフォームを開く
+            </a>
+            {release.isAvailable ? (
+              <a
+                href={release.downloadUrl}
+                class="btn btn-primary download-button"
+                data-download-installer
+                data-file-name={release.fileName}
+                data-file-version={release.version}
+                download={release.fileName}
+                rel="noopener noreferrer"
+              >
+                <span class="action-number">2</span>
+                Windows版をダウンロード
+              </a>
+            ) : (
+              <span class="btn download-button download-button-disabled" aria-disabled="true">
+                <span class="action-number">2</span>
+                ダウンロード準備中
+              </span>
+            )}
+          </div>
+
+          <p class="release-file-name">{release.fileName}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="license-section" aria-labelledby="license-title">
+      <div class="shell">
+        <div class="license-notice">
+          <div class="license-notice-mark" aria-hidden="true">!</div>
+          <div class="license-notice-copy">
+            <span class="license-label">ご利用前に必ずご確認ください</span>
+            <h2 id="license-title">Revit助人のご利用にはトライアルのお申し込みが必要です</h2>
+            <p>
+              まだお申し込みでない方は、トライアル申し込みフォームに必要事項を入力して送信してください。
+            </p>
+            <p class="license-emphasis">
+              すでにお申し込み済みの方には、最大2営業日以内にYUTECT担当者よりライセンスキーをメールで送付します。
+            </p>
+            <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn license-button">
+              トライアル申し込みフォームを開く
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="download-flow-section" aria-labelledby="flow-title">
+      <div class="shell">
+        <div class="section-head-c download-section-head">
+          <span class="eyebrow">Getting started</span>
+          <h2 id="flow-title">ご利用開始までの流れ</h2>
+          <p>お申し込みからインストールまで、以下の手順でお進みください。</p>
+        </div>
+
+        <ol class="download-flow">
+          <li>
+            <span class="flow-number">01</span>
+            <div>
+              <h3>トライアルを申し込む</h3>
+              <p>トライアル申し込みフォームに必要事項を入力して送信してください。</p>
+              <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer">申し込みフォームを開く <span aria-hidden="true">↗</span></a>
+            </div>
+          </li>
+          <li>
+            <span class="flow-number">02</span>
+            <div>
+              <h3>メールを確認する</h3>
+              <p>お申し込み後、最大2営業日以内にYUTECT担当者よりライセンスキーをメールで送付します。</p>
+            </div>
+          </li>
+          <li>
+            <span class="flow-number">03</span>
+            <div>
+              <h3>インストーラーを実行する</h3>
+              <p>Revitを終了し、ダウンロードしたZIPを展開して、中にあるインストーラーを実行します。</p>
+            </div>
+          </li>
+          <li>
+            <span class="flow-number">04</span>
+            <div>
+              <h3>Revit助人を利用開始</h3>
+              <p>メールの案内に従ってライセンスキーを設定し、Revitから起動します。</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="download-notes-section" aria-labelledby="notes-title">
+      <div class="shell download-notes-grid">
+        <div>
+          <span class="eyebrow">Before installation</span>
+          <h2 id="notes-title">インストール前の確認</h2>
+        </div>
+        <ul class="download-notes">
+          <li>インストール前に、起動中のRevitをすべて終了してください。</li>
+          <li>お申し込み後、最大2営業日以内にフォームに入力したメールアドレスへライセンスキーを送付します。</li>
+          <li>メールが届かない場合は、迷惑メールフォルダもご確認ください。</li>
+          <li>ライセンスキーを第三者へ共有・譲渡することはできません。</li>
+          <li>アルファ版のため、機能や仕様は予告なく変更される場合があります。</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer hideProductLink />
+</Layout>
+
+<script>
+  type GtagWindow = Window & {
+    gtag?: (command: string, eventName: string, params: Record<string, string>) => void;
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-download-installer]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const analyticsWindow = window as GtagWindow;
+      analyticsWindow.gtag?.('event', 'file_download', {
+        file_name: link.dataset.fileName || 'RevitSuketto-Setup.exe',
+        file_version: link.dataset.fileVersion || 'unknown',
+      });
+    });
+  });
+</script>
+
+<style>
+  .download-page { background: var(--paper); }
+
+  .download-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 88px 0 96px;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+  }
+  .download-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(700px 440px at 82% 12%, rgba(201, 168, 86, 0.18), transparent 65%),
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: auto, 64px 64px, 64px 64px;
+    pointer-events: none;
+  }
+  .download-hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(440px, 1fr);
+    gap: 80px;
+    align-items: center;
+  }
+  .download-hero-copy .eyebrow { display: block; color: var(--gold-300); margin-bottom: 22px; }
+  .download-hero-copy h1 {
+    margin: 0 0 24px;
+    font-size: clamp(2.25rem, 5vw, 4.25rem);
+    line-height: 1.25;
+    font-weight: 500;
+    letter-spacing: 0.055em;
+  }
+  .download-hero-copy p {
+    max-width: 560px;
+    color: var(--navy-100);
+    font-size: 0.9375rem;
+    line-height: 2;
+  }
+
+  .download-release-card {
+    padding: 34px 36px 30px;
+    color: var(--ink-900);
+    background: rgba(255,255,255,0.98);
+    border: 1px solid rgba(201,168,86,0.45);
+    border-radius: var(--r-card);
+    box-shadow: 0 24px 64px rgba(4, 14, 29, 0.28);
+  }
+  .release-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--ink-100);
+  }
+  .release-kicker {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--gold-700);
+    font-family: var(--font-en);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .release-card-head h2 { margin: 0; color: var(--navy-900); font-size: 1.4rem; font-weight: 600; }
+  .release-card-head h2 span { color: var(--ink-500); font-family: var(--font-en); font-size: 1rem; font-weight: 500; }
+  .release-status {
+    padding: 5px 10px;
+    color: var(--ink-600);
+    background: var(--ink-100);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .release-status.ready { color: #17633a; background: #e3f4e9; }
+
+  .release-details { margin: 0; padding: 10px 0 22px; }
+  .release-details > div {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--ink-50);
+  }
+  .release-details dt { color: var(--ink-500); font-size: 0.8125rem; }
+  .release-details dd { margin: 0; color: var(--navy-900); font-size: 0.875rem; font-weight: 500; }
+  .release-license-reminder {
+    margin-bottom: 18px;
+    padding: 13px 15px;
+    background: var(--gold-50);
+    border-left: 3px solid var(--gold-600);
+  }
+  .release-license-reminder strong,
+  .release-license-reminder span { display: block; }
+  .release-license-reminder strong { margin-bottom: 4px; color: var(--navy-900); font-size: 0.8125rem; }
+  .release-license-reminder span { color: var(--ink-600); font-size: 0.75rem; line-height: 1.6; }
+  .release-card-actions { display: grid; gap: 10px; }
+  .release-card-actions .btn { position: relative; width: 100%; min-height: 54px; }
+  .release-application-button {
+    color: var(--navy-800);
+    background: var(--white);
+    border-color: var(--navy-300);
+  }
+  .release-application-button:hover { color: var(--navy-900); background: var(--navy-50); border-color: var(--navy-600); }
+  .action-number {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-family: var(--font-en);
+    font-size: 0.6875rem;
+    line-height: 1;
+  }
+  .download-button-disabled {
+    cursor: not-allowed;
+    color: var(--ink-500);
+    background: var(--ink-100);
+    border-color: var(--ink-200);
+    box-shadow: none;
+  }
+  .release-file-name {
+    margin-top: 12px;
+    overflow-wrap: anywhere;
+    text-align: center;
+    color: var(--ink-400);
+    font-family: var(--font-en);
+    font-size: 0.6875rem;
+  }
+
+  .license-section { position: relative; margin-top: -34px; padding: 0 0 104px; }
+  .license-notice {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 38px 44px;
+    background: var(--white);
+    border: 1px solid var(--gold-500);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-lg);
+  }
+  .license-notice-mark {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    color: var(--navy-900);
+    background: var(--gold-300);
+    border-radius: 50%;
+    font-family: var(--font-en);
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  .license-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--gold-800);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .license-notice h2 { margin: 0 0 16px; color: var(--navy-900); font-size: 1.45rem; line-height: 1.5; }
+  .license-notice p { margin: 0 0 12px; color: var(--ink-700); font-size: 0.9375rem; line-height: 1.9; }
+  .license-notice .license-emphasis { color: var(--navy-900); font-weight: 600; }
+  .license-button {
+    margin-top: 12px;
+    color: var(--white);
+    background: var(--navy-800);
+    border-color: var(--navy-800);
+  }
+  .license-button:hover { color: var(--white); background: var(--navy-700); transform: translateY(-1px); }
+
+  .download-flow-section { padding: 112px 0 120px; background: var(--white); }
+  .download-section-head { margin-bottom: 58px; }
+  .download-section-head p { margin-top: 14px; color: var(--ink-600); font-size: 0.9375rem; }
+  .download-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--ink-100);
+  }
+  .download-flow li {
+    position: relative;
+    min-height: 265px;
+    padding: 32px 28px;
+    border-right: 1px solid var(--ink-100);
+  }
+  .download-flow li:last-child { border-right: 0; }
+  .flow-number {
+    display: block;
+    margin-bottom: 34px;
+    color: var(--gold-700);
+    font-family: var(--font-en);
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+  .download-flow h3 { margin: 0 0 13px; color: var(--navy-900); font-size: 1rem; line-height: 1.55; }
+  .download-flow p { color: var(--ink-600); font-size: 0.8125rem; line-height: 1.85; }
+  .download-flow a {
+    display: inline-block;
+    margin-top: 18px;
+    padding-bottom: 4px;
+    color: var(--navy-700);
+    border-bottom: 1px solid var(--gold-500);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .download-flow a:hover { color: var(--gold-800); }
+
+  .download-notes-section { padding: 112px 0; background: var(--navy-50); }
+  .download-notes-grid { display: grid; grid-template-columns: 0.65fr 1.35fr; gap: 80px; align-items: start; }
+  .download-notes-grid h2 { margin: 14px 0 0; color: var(--navy-900); font-size: 1.75rem; font-weight: 500; }
+  .download-notes { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--navy-200); }
+  .download-notes li {
+    position: relative;
+    padding: 18px 18px 18px 30px;
+    color: var(--ink-700);
+    border-bottom: 1px solid var(--navy-200);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+  .download-notes li::before {
+    content: "";
+    position: absolute;
+    top: 27px;
+    left: 5px;
+    width: 6px;
+    height: 6px;
+    background: var(--gold-600);
+    transform: rotate(45deg);
+  }
+
+
+  @media (max-width: 960px) {
+    .download-hero-inner { grid-template-columns: 1fr; gap: 52px; }
+    .download-hero-copy { max-width: 680px; }
+    .download-release-card { max-width: 680px; width: 100%; }
+    .download-flow { grid-template-columns: repeat(2, 1fr); }
+    .download-flow li { border-bottom: 1px solid var(--ink-100); }
+    .download-flow li:nth-child(even) { border-right: 0; }
+    .download-flow li:nth-last-child(-n+2) { border-bottom: 0; }
+    .download-notes-grid { grid-template-columns: 1fr; gap: 42px; }
+  }
+
+  @media (max-width: 600px) {
+    .download-hero { padding: 64px 0 74px; }
+    .download-title-break { display: none; }
+    .download-hero-copy h1 { font-size: 2.15rem; }
+    .download-hero-copy p br { display: none; }
+    .download-release-card { padding: 26px 20px 22px; }
+    .release-card-head { gap: 12px; }
+    .release-card-head h2 { font-size: 1.18rem; }
+    .release-details > div { grid-template-columns: 110px 1fr; gap: 12px; }
+    .release-card-actions .btn { padding-inline: 16px; white-space: normal; text-align: center; line-height: 1.45; }
+    .license-section { margin-top: -20px; padding-bottom: 72px; }
+    .license-notice { grid-template-columns: 1fr; gap: 18px; padding: 28px 22px; }
+    .license-notice-mark { width: 42px; height: 42px; }
+    .license-notice h2 { font-size: 1.2rem; }
+    .license-button { width: 100%; white-space: normal; text-align: center; line-height: 1.45; }
+    .download-flow-section { padding: 78px 0 88px; }
+    .download-section-head { margin-bottom: 38px; }
+    .download-flow { grid-template-columns: 1fr; }
+    .download-flow li { min-height: auto; padding: 26px 24px; border-right: 0; border-bottom: 1px solid var(--ink-100); }
+    .download-flow li:nth-last-child(-n+2) { border-bottom: 1px solid var(--ink-100); }
+    .download-flow li:last-child { border-bottom: 0; }
+    .flow-number { margin-bottom: 18px; }
+    .download-notes-section { padding: 78px 0; }
+  }
+</style>

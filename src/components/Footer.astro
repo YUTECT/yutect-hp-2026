@@ -1,8 +1,14 @@
 ---
 import { CONTACT_FORM_URL } from '../lib/config';
 
+interface Props {
+  hideProductLink?: boolean;
+}
+
+const { hideProductLink = false } = Astro.props;
+
 const serviceLinks = [
-  { href: '/products/revit-suketto/', label: 'Revit助人' },
+  ...(!hideProductLink ? [{ href: '/products/revit-suketto/', label: 'Revit助人' }] : []),
   { href: '/#services', label: 'AI開発・コンサルティング' },
 ];
 const companyLinks = [

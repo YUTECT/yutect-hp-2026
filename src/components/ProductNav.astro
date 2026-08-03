@@ -3,23 +3,33 @@ import { CONTACT_FORM_URL } from '../lib/config';
 
 interface Props {
   productName?: string;
+  suffix?: string;
+  backHref?: string;
+  backLabel?: string;
+  backAriaLabel?: string;
 }
 
-const { productName = 'Revit助人' } = Astro.props;
+const {
+  productName = 'Revit助人',
+  suffix = '詳細ページ',
+  backHref = '/',
+  backLabel = 'YUTECT トップへ戻る',
+  backAriaLabel = 'YUTECT ホームページに戻る',
+} = Astro.props;
 ---
 
 <nav class="product-nav">
   <div class="product-nav-inner">
-    <a href="/" class="product-nav-back" aria-label="YUTECT ホームページに戻る">
+    <a href={backHref} class="product-nav-back" aria-label={backAriaLabel}>
       <span class="back-icon" aria-hidden="true">←</span>
-      <span class="back-text">YUTECT トップへ戻る</span>
+      <span class="back-text">{backLabel}</span>
     </a>
 
     <div class="product-nav-divider" aria-hidden="true"></div>
 
     <div class="product-nav-title">
       <span class="product-nav-name">{productName}</span>
-      <span class="product-nav-suffix">詳細ページ</span>
+      <span class="product-nav-suffix">{suffix}</span>
     </div>
 
     <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="product-nav-cta">
