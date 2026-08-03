@@ -34,15 +34,6 @@ const releaseDetails = [
   <main class="download-page">
     <section class="download-hero">
       <div class="shell download-hero-inner">
-        <div class="download-hero-copy">
-          <span class="eyebrow">Download</span>
-          <h1>Revit助人を<br class="download-title-break" />ダウンロード</h1>
-          <p>
-            Revit上での設計業務を、生成AIが自動化・補佐します。<br />
-            インストール前に、トライアルのお申し込みをお願いします。
-          </p>
-        </div>
-
         <div class="download-release-card">
           <div class="release-card-head">
             <div>
@@ -69,10 +60,6 @@ const releaseDetails = [
           </div>
 
           <div class="release-card-actions">
-            <a href={CONTACT_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn release-application-button">
-              <span class="action-number">1</span>
-              トライアル申し込みフォームを開く
-            </a>
             {release.isAvailable ? (
               <a
                 href={release.downloadUrl}
@@ -83,12 +70,10 @@ const releaseDetails = [
                 download={release.fileName}
                 rel="noopener noreferrer"
               >
-                <span class="action-number">2</span>
                 Windows版をダウンロード
               </a>
             ) : (
               <span class="btn download-button download-button-disabled" aria-disabled="true">
-                <span class="action-number">2</span>
                 ダウンロード準備中
               </span>
             )}
@@ -223,27 +208,13 @@ const releaseDetails = [
   }
   .download-hero-inner {
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(440px, 1fr);
-    gap: 80px;
-    align-items: center;
-  }
-  .download-hero-copy .eyebrow { display: block; color: var(--gold-300); margin-bottom: 22px; }
-  .download-hero-copy h1 {
-    margin: 0 0 24px;
-    font-size: clamp(2.25rem, 5vw, 4.25rem);
-    line-height: 1.25;
-    font-weight: 500;
-    letter-spacing: 0.055em;
-  }
-  .download-hero-copy p {
-    max-width: 560px;
-    color: var(--navy-100);
-    font-size: 0.9375rem;
-    line-height: 2;
+    display: flex;
+    justify-content: center;
   }
 
   .download-release-card {
+    width: 100%;
+    max-width: 720px;
     padding: 34px 36px 30px;
     color: var(--ink-900);
     background: rgba(255,255,255,0.98);
@@ -304,23 +275,6 @@ const releaseDetails = [
   .release-license-reminder span { color: var(--ink-600); font-size: 0.75rem; line-height: 1.6; }
   .release-card-actions { display: grid; gap: 10px; }
   .release-card-actions .btn { position: relative; width: 100%; min-height: 54px; }
-  .release-application-button {
-    color: var(--navy-800);
-    background: var(--white);
-    border-color: var(--navy-300);
-  }
-  .release-application-button:hover { color: var(--navy-900); background: var(--navy-50); border-color: var(--navy-600); }
-  .action-number {
-    display: inline-grid;
-    place-items: center;
-    width: 22px;
-    height: 22px;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    font-family: var(--font-en);
-    font-size: 0.6875rem;
-    line-height: 1;
-  }
   .download-button-disabled {
     cursor: not-allowed;
     color: var(--ink-500);
@@ -448,8 +402,6 @@ const releaseDetails = [
 
 
   @media (max-width: 960px) {
-    .download-hero-inner { grid-template-columns: 1fr; gap: 52px; }
-    .download-hero-copy { max-width: 680px; }
     .download-release-card { max-width: 680px; width: 100%; }
     .download-flow { grid-template-columns: repeat(2, 1fr); }
     .download-flow li { border-bottom: 1px solid var(--ink-100); }
@@ -460,9 +412,6 @@ const releaseDetails = [
 
   @media (max-width: 600px) {
     .download-hero { padding: 64px 0 74px; }
-    .download-title-break { display: none; }
-    .download-hero-copy h1 { font-size: 2.15rem; }
-    .download-hero-copy p br { display: none; }
     .download-release-card { padding: 26px 20px 22px; }
     .release-card-head { gap: 12px; }
     .release-card-head h2 { font-size: 1.18rem; }
